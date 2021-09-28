@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!--Description-->
+
+    
+
+    
+        <meta name="description" content="DNS PrincipalWhy DNS?
+The most communication on the Internet is based on TCP/IP, and TCP/IP is based on the IP address. However, it is impossible for "/>
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Yutian Li"/>
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="DNS"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="DNS PrincipalWhy DNS?
+The most communication on the Internet is based on TCP/IP, and TCP/IP is based on the IP address. However, it is impossible for "/>
+    
+
+    <!--Open Graph Site Name-->
+        <meta property="og:site_name" content="Yutian&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article"/>
+    
+
+    <!--Page Cover-->
+    
+    
+        <meta property="og:image" content="network://example.comimg/home-bg.jpg"/>
+    
+
+        <meta name="twitter:card" content="summary_large_image"/>
+
+    
+
+    
+        <meta name="twitter:image" content="network://example.comimg/home-bg.jpg"/>
+    
+
+    <!-- Title -->
+    
+    <title>DNS - Yutian&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet"/>
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">笙歌院落</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="https://github.com/eziceice">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>DNS</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2019-05-01
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/network/">#network</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="DNS-Principal"><a href="#DNS-Principal" class="headerlink" title="DNS Principal"></a>DNS Principal</h1><h3 id="Why-DNS"><a href="#Why-DNS" class="headerlink" title="Why DNS?"></a>Why DNS?</h3><ul>
+<li>The most communication on the Internet is based on TCP/IP, and TCP/IP is based on the IP address. However, it is impossible for people to memory the correct IP address for some websites. That’s why DNS is introduced to provide a service to transfer the IP address to domain name as well as domain name to IP address.</li>
+</ul>
+<h3 id="What-is-DNS"><a href="#What-is-DNS" class="headerlink" title="What is DNS?"></a>What is DNS?</h3><ul>
+<li>Domain Name System, which is in the application layer of TCP/IP. It is used to transfer between IP address to domain name.<br><img src="https://pic1.zhimg.com/80/e5143bc08d4ec9d7f210522c7e540f4d_hd.jpg" alt="DNS"></li>
+</ul>
+<h3 id="DNS-Lookup-Process"><a href="#DNS-Lookup-Process" class="headerlink" title="DNS Lookup Process"></a>DNS Lookup Process</h3><ul>
+<li>DNS is a application layer protocol, and actually it is working for other application layer including HTTP and FTP.</li>
+<li>The process steps for DNS:<ul>
+<li>Each client has some cached DNS either in their browser or hosts or router.</li>
+<li>When a url is entered in the browser, for example <code>https://www.google.com.au/</code>, browser will retrieve the domain name from the Url and try to look for this domain name in the client cache.</li>
+<li>If the domain name can’t be found in the client side, then a request message will be sent to the DNS server on the Internet.</li>
+<li>A response message will be received by client when a matching IP address is found from other DNS server.</li>
+<li>Browser will use the received IP address to start a TCP connection with the matching server.</li>
+</ul>
+</li>
+<li>Process order:<ul>
+<li><ol>
+<li><strong>Browser cache</strong>: when user try to access a domain name in browser, browser firstly will try to look for the browser cache to see if it already has the matching IP for that domain.</li>
+</ol>
+</li>
+<li><ol start="2">
+<li><strong>System cache</strong>: If the browser can’t find the matching IP, then the hosts file will be checked. If still not found, the local DNS will be checked as well, it is usually in the TCP/IP settings.</li>
+</ol>
+</li>
+<li><ol start="3">
+<li><strong>Router cache</strong>: If there is no result matched in system and browser, router cache will be checked. All these three are called <strong>Client DNS cache</strong>.</li>
+</ol>
+</li>
+<li><ol start="4">
+<li><strong>ISP DNS cache</strong>: There will be some cached IP on the ISP DNS server. It will the checked as well.</li>
+</ol>
+</li>
+<li><ol start="5">
+<li><strong>Root name server</strong>: If no matched result above, then it will go into the root domain server to look for the result. There are only 13 root name servers worldwide. That is a tree structure for the root name servers and below top level name servers. If the root name server can’t find the result, it will ask the top level name servers to look for the matching IP address.</li>
+</ol>
+</li>
+<li><ol start="6">
+<li><strong>Top Level name server</strong>: A top level name server manages a lot of primary domain name servers. If it can’t find the matching result, then it will ask the lower primary domain name servers to look for it.</li>
+</ol>
+</li>
+<li><ol start="7">
+<li><strong>Primary name server</strong>: This will be a loop until a matching result is found in the primary name server or lower level name server and the results will be returned to the client.</li>
+</ol>
+</li>
+<li><ol start="8">
+<li><strong>Cache the result</strong>: Result will be cached on the client side and client will use this IP to build the connection with the right server.</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Types-of-DNS"><a href="#Types-of-DNS" class="headerlink" title="Types of DNS"></a>Types of DNS</h3><ul>
+<li><strong>Root Name Server</strong>: First stop for all domain name resolver requests,  based on the extension of the domain (.com/.net/.org/etc.), the root name server will redirect the requests to the matching TLD name server.</li>
+<li><strong>TLD (Top Level Domain) Server</strong>: A TLD nameserver maintains information for all the domain names that share a common domain extension, such as .com, .net, or whatever comes after the last dot in a url. After receiving a response from a root nameserver, the recursive resolver would then send a query to a .com TLD nameserver, which would respond by pointing to the authoritative nameserver (primary name server) for that domain.</li>
+<li><strong>Authoritative nameserver (primary nameserver)</strong>: When a recursive resolver receives a response from a TLD nameserver, that response will direct the resolver to an authoritative nameserver. The authoritative nameserver is usually the resolver’s last step in the journey for an IP address. It can provide a recursive resolver with the IP address of that server found in the DNS record.</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/eziceice/blog/master/dns/DNS_Category.png" alt="DNS Type"></p>
+<ul>
+<li><strong>Example for different domain name types</strong>:</li>
+</ul>
+<p><img src="https://pic3.zhimg.com/80/v2-f5f5595b99be23d0b8d74e38b1e47b31_hd.jpg" alt="Domain types"></p>
+<h3 id="DNS-Lookup-Type"><a href="#DNS-Lookup-Type" class="headerlink" title="DNS Lookup Type"></a>DNS Lookup Type</h3><ul>
+<li><strong>Recursive Query</strong>: This normally happens between client and DNS resolver. It means DNS resolver will help client to find the matching IP address. If it can’t be found in the next server, a resolver will keep requesting itself (recurisive) to the other available options until the matching IP address is found.<ul>
+<li>Recursive：仅返回应答，DNS Server可以不用支持Recursive查询模式。</li>
+</ul>
+</li>
+<li><strong>Iterative Query</strong>: This normally happens between the DNS resolver and the root server/TLD server and primary sever. It means if root server can’t find a result, it will return the possible TLD server address to the DNS resolver, and then resolver will send a new request to that TLD server and ask for the matching IP. TLD server will do the same thing until the result is found in the authoritative name server.<ul>
+<li>Iterative：返回完整应答或者将请求引到其它DNS，所有DNS server都支持Iterative查询模式。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://pic4.zhimg.com/80/v2-1f77f41f7d43696f77a07874e0d86132_hd.jpg" alt="DNS Loopup"></p>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/eziceice" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                        <li>
+                            <a href="https://www.linkedin.com/in/yutian-li-8070b9102/" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                        <li>
+                            <a href="mailto:liyutian6@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2021 Yutian Li<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

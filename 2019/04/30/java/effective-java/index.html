@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!--Description-->
+
+    
+
+    
+        <meta name="description" content="Chapter 2. Creating and Destorying ObjectsConsider static factory methods instead of constructorsAdvantage:
+
+Static factory has name which is better f"/>
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Yutian Li"/>
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Effective Java"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Chapter 2. Creating and Destorying ObjectsConsider static factory methods instead of constructorsAdvantage:
+
+Static factory has name which is better f"/>
+    
+
+    <!--Open Graph Site Name-->
+        <meta property="og:site_name" content="Yutian&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article"/>
+    
+
+    <!--Page Cover-->
+    
+    
+        <meta property="og:image" content="network://example.comimg/home-bg.jpg"/>
+    
+
+        <meta name="twitter:card" content="summary_large_image"/>
+
+    
+
+    
+        <meta name="twitter:image" content="network://example.comimg/home-bg.jpg"/>
+    
+
+    <!-- Title -->
+    
+    <title>Effective Java - Yutian&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet"/>
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">笙歌院落</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="https://github.com/eziceice">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Effective Java</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2019-04-30
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/java/">#java</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/programming-languages/">programming languages</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="Chapter-2-Creating-and-Destorying-Objects"><a href="#Chapter-2-Creating-and-Destorying-Objects" class="headerlink" title="Chapter 2. Creating and Destorying Objects"></a>Chapter 2. Creating and Destorying Objects</h1><h2 id="Consider-static-factory-methods-instead-of-constructors"><a href="#Consider-static-factory-methods-instead-of-constructors" class="headerlink" title="Consider static factory methods instead of constructors"></a>Consider static factory methods instead of constructors</h2><p><strong>Advantage:</strong></p>
+<ul>
+<li><p>Static factory has name which is better for people to understand it compared to constructors. If you want to create two constructors with different signature, it’s better to use static factory as using the different method name is simpler for other people to distinguish the difference.</p>
+</li>
+<li><p>Unlike constructors, static factory is not required to create a new object each time they’re invoked. This could improve the performance if the equivalent objects are requested often. Similar to singleton. This will also improve the performance of equals() - Don’t need to override hasCode() or hash() anymore.</p>
+</li>
+<li><p>Static factory could return an object of any subtype of their return type. Constructor only can return the current object. This improves the flexibility of  choosing the class of the returned object. <strong>Java 8 requires all static members of an interface to be public. Java 9 allows private static methods, but static fields and static member classes are still required to be public.</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Noninstantiable class - It can be initialized by using constructor or reflection. </span><br><span class="line"></span><br><span class="line">public class A &#123;</span><br><span class="line">    private A() throws Exception &#123;</span><br><span class="line">        throw new Exception();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>Static factory could return different object based on the different input parameters. Java library EnumSet is a good example for this.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public static &lt;E extends Enum&lt;E&gt;&gt; EnumSet&lt;E&gt; noneOf(Class&lt;E&gt; elementType) &#123;</span><br><span class="line">     Enum&lt;?&gt;[] universe = getUniverse(elementType);</span><br><span class="line">     if (universe == null)</span><br><span class="line">         throw new ClassCastException(elementType + &quot; not an enum&quot;);</span><br><span class="line"></span><br><span class="line">     if (universe.length &lt;= 64)</span><br><span class="line">         return new RegularEnumSet&lt;&gt;(elementType, universe);</span><br><span class="line">     else</span><br><span class="line">         return new JumboEnumSet&lt;&gt;(elementType, universe);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>The Static factory class of the returned object doesn’t need to exist when the class containing the method is written.<br>Service provider framework:</p>
+<ul>
+<li>Component 1: Service Interface, which represents an implementation.</li>
+<li>Component 2: Provider registration API, which provides use to register implementations.</li>
+<li>Component 3: Service access API, which clients use to obtain instances of the service. This may allow clients to specify criteria for choosing an implementation. In the absence of such criteria, the API returns an instance of a default implementation, or allows the client to cycle through all available implementations. <strong>The service access API is the flexible static factory that forms the basis of the service provider framework.</strong></li>
+</ul>
+</li>
+</ul>
+<p><strong>Limitation</strong></p>
+<ul>
+<li><p>Static factory methods cannot be extended compared to public or protected constructor. A class can extend from its parent class but the subclass cannot override its parent class static method. A static method is belonged to the class itself, not belonged to any instance of this class. In addition, it is defined in the compile time, not in the run time.</p>
+</li>
+<li><p> Normally a static method is hard for programmers to find. Constructor is very easy for programmers to distinguish the difference. It’s better to put the appropriate Java doc there for other people to know this is a static factory method.</p>
+</li>
+</ul>
+<h2 id="Consider-a-builder-when-faced-with-many-constructor-parameters"><a href="#Consider-a-builder-when-faced-with-many-constructor-parameters" class="headerlink" title="Consider a builder when faced with many constructor parameters"></a>Consider a builder when faced with many constructor parameters</h2><ul>
+<li><strong>Static factories and constructors share a limitation: they do not scale well to large numbers of optional parameters.</strong> There are two alternative ways but still they have some limitations:</li>
+</ul>
+<ol>
+<li>Sometimes the telescoping constructor pattern works, but it is hard to write client code when there are many parameters, and harder still to read it.</li>
+<li>An alternative way is using Java bean, but again, you need to call setter several times, which prevents the possibility of the immutable class or need to ensure thread safety.</li>
+</ol>
+<ul>
+<li><p><strong>Build Pattern:</strong> The NutritionFacts class is immutable, and all parameters default values are in one place. A single builders can have multiple varargs(可变参数) parameters because each parameter is specified in its own method. It is quite flexible and a single builder can be used to build multiple objects.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">// Builder Pattern</span><br><span class="line">public class NutritionFacts &#123;</span><br><span class="line">	</span><br><span class="line">	private final int servingSize;</span><br><span class="line">	private final int servings;</span><br><span class="line">	private final int calories;</span><br><span class="line">	private final int fat;</span><br><span class="line">	private final int sodium;</span><br><span class="line">	private final int carbohydrate;</span><br><span class="line"></span><br><span class="line">	public static class Builder &#123;</span><br><span class="line">		// Required parameters</span><br><span class="line">		private final int servingSize;</span><br><span class="line">		private final int servings;</span><br><span class="line">		// Optional parameters - initialized to default values</span><br><span class="line">		private int calories = 0;</span><br><span class="line">		private int fat = 0;</span><br><span class="line">		private int sodium = 0;</span><br><span class="line">		private int carbohydrate = 0;</span><br><span class="line"></span><br><span class="line">		public Builder(int servingSize, int servings) &#123;</span><br><span class="line">			this.servingSize = servingSize;</span><br><span class="line">			this.servings = servings;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public Builder calories(int val) &#123; </span><br><span class="line">			calories = val; return this; </span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public Builder fat(int val) &#123; </span><br><span class="line">			fat = val; </span><br><span class="line">			return this; </span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public Builder sodium(int val) &#123; </span><br><span class="line">			sodium = val; </span><br><span class="line">			return this; </span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		public Builder carbohydrate(int val) &#123; </span><br><span class="line">			carbohydrate = val; </span><br><span class="line">			return this; </span><br><span class="line">		&#125;</span><br><span class="line">		public NutritionFacts build() &#123;</span><br><span class="line">			return new NutritionFacts(this);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	private NutritionFacts(Builder builder) &#123;</span><br><span class="line">		servingSize = builder.servingSize;</span><br><span class="line">		servings = builder.servings;</span><br><span class="line">		calories = builder.calories;</span><br><span class="line">		fat = builder.fat;</span><br><span class="line">		sodium = builder.sodium;</span><br><span class="line">		carbohydrate = builder.carbohydrate;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>Builder Pattern is not suitable for less parameters (less than 5), it can cause some performance issues. However, it is still better than using the telescoping constructors because normally the parameters will go large in the end. Moreover, it is really helpful for the optional parameters.</p>
+</li>
+</ul>
+<h2 id="Enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type"><a href="#Enforce-the-singleton-property-with-a-private-constructor-or-an-enum-type" class="headerlink" title="Enforce the singleton property with a private constructor or an enum type"></a>Enforce the singleton property with a private constructor or an enum type</h2><ul>
+<li>Normally we use private constructor and static factory to implement singleton. However, if you have a singleton object, you do serialize and de-serialize on it, you could get two singleton objects. To maintain the singleton guarantee, declare all instance fields transient and provide a readResolve method.<br><strong>The best way to preserve singleton is define the singleton object as a Enum. The limitation for this approach is you can’t extent it from a superclass except Enum</strong><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Enum singleton - the preferred approach</span><br><span class="line">public enum Elvis &#123;</span><br><span class="line">	INSTANCE;</span><br><span class="line">	public void leaveTheBuilding() &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Enforce-noninstantiability-with-a-private-constructor"><a href="#Enforce-noninstantiability-with-a-private-constructor" class="headerlink" title="Enforce noninstantiability with a private constructor"></a>Enforce noninstantiability with a private constructor</h2><ul>
+<li>For some utility classes, normally people don’t want them to be initialized and maintain them as static class. Attempting to enforce noninstantiability by making a class abstract does not work.  The best way is to add a private constructor and let it throw an exception. This will guarantee the class will never be instantiated under any circumstances.  As a side effect, this constructor also prevents the class from being subclassed.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// Noninstantiable utility class</span><br><span class="line">public class UtilityClass &#123;</span><br><span class="line">	// Suppress default constructor for noninstantiability</span><br><span class="line">	private UtilityClass() &#123;</span><br><span class="line">	throw new AssertionError();</span><br><span class="line">	&#125;</span><br><span class="line">	... // Remainder omitted</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Prefer-dependency-injection-to-handwriting-resources"><a href="#Prefer-dependency-injection-to-handwriting-resources" class="headerlink" title="Prefer dependency injection to handwriting resources"></a>Prefer dependency injection to handwriting resources</h2><ul>
+<li> Static utility classes and singletons are inappropriate for classes whose behavior is parameterized by an underlying resource.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// Pass the dependency to the constructor to initial different field in that class - Dependency injection</span><br><span class="line">public class SpellChecker &#123;</span><br><span class="line">    private final Lexicon dictionary;</span><br><span class="line">    public SpellChecker(Lexicon dictionary) &#123;</span><br><span class="line">        this.dictionary = Objects.requireNonNull(dictionary);</span><br><span class="line">    &#125;</span><br><span class="line">    public boolean isValid(String word) &#123; ... &#125;</span><br><span class="line">    public List&lt;String&gt; suggestions(String typo) &#123; ... &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+In conclusion, do not use a singleton or static utility class to implement a class that depends on one or more underlying resources whose behavior affects that of the class, and do not have the class create these resources directly. Instead, pass the resources, or factories to create them, into the constructor (or static factory or builder).</li>
+</ul>
+<h2 id="Avoid-creating-unnecessary-objects"><a href="#Avoid-creating-unnecessary-objects" class="headerlink" title="Avoid creating unnecessary objects"></a>Avoid creating unnecessary objects</h2><ul>
+<li>An object can always be reused if it is immutable. You can often avoid creating unnecessary objects by using static factory methods in preference to constructors on immutable classes that provide both. In addition to reusing immutable objects, you can also reuse mutable objects if you know they won’t be modified. For example, it is better to use Boolean.valueOf(String) instead of use Boolean(String) as the second method always create a new object in memory.</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// The performance can be greatly improved because every time this method is called, </span><br><span class="line">// a new Pattern is created and the regex is being compiled. It takes a lot of time. </span><br><span class="line">    static boolean isRomanNumeral(String s) &#123;</span><br><span class="line">        return s.matches(&quot;^(?=.)M*(C[MD]|D?C&#123;0,3&#125;)&quot;</span><br><span class="line">                + &quot;(X[CL]|L?X&#123;0,3&#125;)(I[XV]|V?I&#123;0,3&#125;)$&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">// The improvement version here, there will be only one Pattern which can be reused many times</span><br><span class="line">// It also improves the readability of this class </span><br><span class="line">   private static final Pattern ROMAN =</span><br><span class="line">            Pattern.compile(</span><br><span class="line">                    &quot;^(?=.)M*(C[MD]|D?C&#123;0,3&#125;)&quot;</span><br><span class="line">                            + &quot;(X[CL]|L?X&#123;0,3&#125;)(I[XV]|V?I&#123;0,3&#125;)$&quot;);</span><br><span class="line">    static boolean isRomanNumeral(String s) &#123;</span><br><span class="line">        return ROMAN.matcher(s).matches();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Be careful of using autoboxing. Sometimes it can cause the performance issue because of creating some unnecessary objects.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// Try to use primitive type instead of autoboxing.</span><br><span class="line">private static long sum() &#123;</span><br><span class="line">        Long sum = 0L; // many Long objects will be created in the loop, should use long instead</span><br><span class="line">        for (long i = 0; i &lt;= Integer.MAX_VALUE; i++)</span><br><span class="line">              sum += i;</span><br><span class="line">        return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Eliminate-obsolete-object-references"><a href="#Eliminate-obsolete-object-references" class="headerlink" title="Eliminate obsolete object references"></a>Eliminate obsolete object references</h2><ul>
+<li><p>Consider this part code below: In a very rare situation, it may cause the failure with <strong>OutOfMemoryError</strong>, which can be considered as a memory leak.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class Stack &#123;</span><br><span class="line">    private Object[] elements;</span><br><span class="line">    private int size = 0;</span><br><span class="line">    private static final int DEFAULT_INITIAL_CAPACITY =</span><br><span class="line">            16;</span><br><span class="line"></span><br><span class="line">    public Stack() &#123;</span><br><span class="line">        elements = new Object[DEFAULT_INITIAL_CAPACITY];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void push(Object e) &#123;</span><br><span class="line">        ensureCapacity();</span><br><span class="line">        elements[size++] = e;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public Object pop() &#123;</span><br><span class="line">        if (size == 0)</span><br><span class="line">            throw new EmptyStackException();</span><br><span class="line">        return elements[--size];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * Ensure space for at least one more element,</span><br><span class="line">     * roughly</span><br><span class="line">     * doubling the capacity each time the array needs</span><br><span class="line">     * to grow.</span><br><span class="line">     */</span><br><span class="line">    private void ensureCapacity() &#123;</span><br><span class="line">        if (elements.length == size)</span><br><span class="line">            elements = Arrays.copyOf(elements, 2 * size + 1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>The reason above previous class is that if a stack grows and then shrinks, the objects that were popped off the stack will not be garbage collected, even if the program using the stack has no more references to them. This is because the stack maintain <strong>obsolete references</strong> to these projects. An obsolete reference is simply a reference that will never be referenced again.  The fix for this sort of problem is simple: <strong>null out references once they become obsolete</strong>.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public Object pop()&#123;</span><br><span class="line">    if(size==0)</span><br><span class="line">        throw new EmptyStackException();</span><br><span class="line">    Object result=elements[--size];</span><br><span class="line">    elements[size]=null; // Eliminate obsolete reference</span><br><span class="line">    return resul;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>Generally speaking, <strong>whenever a class manages its own memory, the programmer should be alert for memory leaks</strong>. Whenever an element is freed, any object references contained in the element should be nulled out.</p>
+</li>
+<li><p>Another common source of memory leaks is <strong>caches</strong>. Sometimes the object references into a cache are always forgotten by programmers. Behaviors such as using WeakHashMap, ScheduledThreadPoolExecutor or LinkedHashMap should be used to ensure the caches will be cleaned after the objects are no longer used.</p>
+</li>
+<li><p>A third common source of memory leaks is <strong>listeners and other callbacks</strong>. One way to ensure that callbacks are garbage collected promptly is to store only weak references to them. For instance, by storing them only as keys in a WeakHashMap.</p>
+</li>
+</ul>
+<h2 id="Avoid-finalizers-and-cleaners"><a href="#Avoid-finalizers-and-cleaners" class="headerlink" title="Avoid finalizers and cleaners"></a>Avoid finalizers and cleaners</h2><ul>
+<li>In Java 9, Cleaners are created to replace the Finalizers. Although Cleaners are less dangerous than Finalizers, but still unpredictable, slow and generally unnecessary. There is no guarantee they’ll be executed promptly. You should never depend on a finalizer or cleaner to update persistent state. In addition, calling finalizer may throw an exception, which could leave the object in a corrupt state and terminate the application. Moreover, there is a severe performance penalty for using finalizers and cleaners. Next, Finalizers have a serious security problem, they open your class up to finalizer attacks. If you really want to use Finalizers, just have your class implement AutoCloseable.</li>
+</ul>
+<h2 id="Prefer-try-with-resources-to-try-finally"><a href="#Prefer-try-with-resources-to-try-finally" class="headerlink" title="Prefer try-with-resources to try-finally"></a>Prefer try-with-resources to try-finally</h2><ul>
+<li><p><strong>Conclusion: always use try-with-resources instead of try-finally!!</strong></p>
+</li>
+<li><p>Try-catch-finally is not bad currently, but it is hard to read when you try to read multiple resources, the syntax is a disaster. In addition, in the code below, if there is an exception happened in the read method and then exception happened in the close method again. Under these circumstances, the second exception completely obliterates the first one and there is no record of the first exception in the exception stack trace.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// resource needs to be closed in different finally block. It&#x27;s hard to read and understand. </span><br><span class="line">static void copy(String src, String dst) throws IOException &#123;</span><br><span class="line">    InputStream in = new FileInputStream(src);</span><br><span class="line">    try &#123;</span><br><span class="line">        OutputStream out = new FileOutputStream(dst);</span><br><span class="line">        try &#123;</span><br><span class="line">            byte[] buf = new byte[BUFFER_SIZE];</span><br><span class="line">            int n;</span><br><span class="line">            while ((n = in.read(buf)) &gt;= 0)</span><br><span class="line">                out.write(buf, 0, n);</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            out.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; finally &#123;</span><br><span class="line">        in.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>try-with-resources handle this situation easily. It is shorter and more readable than the originals and it will suppress the exception in the invisible close method. In fact, multiple exceptions may be suppressed in order to preserve the exception that you actually want to see.  In addition, you still can add catch block in try-with resources clause, and it will catch the exception you want and do what you want.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">static String firstLineOfFile(String path) throws IOException &#123;</span><br><span class="line">    try (BufferedReader br = new BufferedReader(new FileReader(path)))&#123;</span><br><span class="line">        return br.readLine();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">static void copy(String src, String dst) throws IOException &#123;</span><br><span class="line">    try (InputStream in = new FileInputStream(src); OutputStream out = new FileOutputStream(dst)) &#123;</span><br><span class="line">        byte[] buf = new byte[BUFFER_SIZE];</span><br><span class="line">        int n;</span><br><span class="line">        while ((n = in.read(buf)) &gt;= 0)</span><br><span class="line">            out.write(buf, 0, n);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/eziceice" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                        <li>
+                            <a href="https://www.linkedin.com/in/yutian-li-8070b9102/" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                        <li>
+                            <a href="mailto:liyutian6@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2021 Yutian Li<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

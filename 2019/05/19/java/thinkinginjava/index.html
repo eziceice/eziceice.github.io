@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!--Description-->
+
+    
+
+    
+        <meta name="description" content="Thinking in JavaNote: Review this book and try to find something that didn’t understand correctly.Number of times now: 3rd
+1. 对象导论
+Late Binding：当在Java"/>
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Yutian Li"/>
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Thinking in Java"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Thinking in JavaNote: Review this book and try to find something that didn’t understand correctly.Number of times now: 3rd
+1. 对象导论
+Late Binding：当在Java"/>
+    
+
+    <!--Open Graph Site Name-->
+        <meta property="og:site_name" content="Yutian&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article"/>
+    
+
+    <!--Page Cover-->
+    
+    
+        <meta property="og:image" content="network://example.comimg/home-bg.jpg"/>
+    
+
+        <meta name="twitter:card" content="summary_large_image"/>
+
+    
+
+    
+        <meta name="twitter:image" content="network://example.comimg/home-bg.jpg"/>
+    
+
+    <!-- Title -->
+    
+    <title>Thinking in Java - Yutian&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet"/>
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">笙歌院落</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="https://github.com/eziceice">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Thinking in Java</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2019-05-19
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/java/">#java</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/programming-languages/">programming languages</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="Thinking-in-Java"><a href="#Thinking-in-Java" class="headerlink" title="Thinking in Java"></a>Thinking in Java</h1><p><strong><em>Note: Review this book and try to find something that didn’t understand correctly.</em></strong><br><em>Number of times now: <strong>3rd</strong></em></p>
+<h2 id="1-对象导论"><a href="#1-对象导论" class="headerlink" title="1. 对象导论"></a>1. 对象导论</h2><ul>
+<li>Late Binding：当在Java中调用方法时，被调用的方法只有在运行时才会确定它的Object的具体类型，这也是Java多态能够实现的核心。</li>
+</ul>
+<h2 id="2-Everything-is-Object"><a href="#2-Everything-is-Object" class="headerlink" title="2. Everything is Object"></a>2. Everything is Object</h2><ul>
+<li>Stack：位于通用RAM中，但是可以通过Stack pointer可有从处理器那里直接获得支持。Pointer如果向下移动，则分配新的内存，如果向上移动，则释放内存。reference通常都存在与stack中；如果想要在在stack中创建对象，必须要知道对象的生命周期。<strong>基本类型都在stack中存放。</strong></li>
+<li>Heap：也位于通用RAM中，用来存放Java所有的对象，不同于stack，compiler不需要知道存储在heap中的数据存活多长时间。因此，在heap中分配内存有着很大的灵活性，但是因此也有trade off，用heap进行存储分配和clean比用stack需要更多的时间。</li>
+<li>Static pool：常量值通常直接存放在程序代码内部，这样做是安全的，因为它们永远不会被改变。</li>
+<li>基本类型初始值：（<strong>只适用于class variable， 对于局部变量可能为任意值，因此对于局部变量尽量赋予初值</strong>）<ul>
+<li> boolean：false</li>
+<li>char：null</li>
+<li>byte：0</li>
+<li>short：0</li>
+<li>int：0</li>
+<li>long：0L</li>
+<li>float：0.0f</li>
+<li>double：0.0d</li>
+</ul>
+</li>
+<li>当声明一个事务是static的时候，就意味着这个field或者方法不会与包含它的那个类的任何对象实例关联在一起。</li>
+</ul>
+<h2 id="2-Operator"><a href="#2-Operator" class="headerlink" title="2. Operator"></a>2. Operator</h2><ul>
+<li>对于基本的数据类型的赋值，由于其存储了实际的值，而并非指向一个对象的引用，所以在为其赋值时，是直接将一个地方的内容复制到了另一个地方。但是对于对象则是复制的引用。<strong>将对象和基本类型在参数中传递时也是这样的效果。</strong></li>
+</ul>
+<h2 id="5-Constructor-and-Clean"><a href="#5-Constructor-and-Clean" class="headerlink" title="5. Constructor and Clean"></a>5. Constructor and Clean</h2><ul>
+<li>如果定义的类中已经有了constructor，那么compiler就不会自动创建一个default constructor。</li>
+<li>this关键字表示获取当前对象的引用。static方法就是没有this的方法。</li>
+<li>Java的GC机制：从static pool和stack开始，遍历所有的reference，就能找到所有活的对象，然后清理所有不需要的对象。<strong>两种GC处理技术会来回切换。</strong><ul>
+<li><strong>Stop and Copy</strong>：暂停程序的运行，将所有活的对象从当前的heap复制到另一个新的heap，然后清理。该方法效率低但是清理后的对象都是紧挨着的，因此分配新空间比较简单直接。该方法在程序稳定以后效率更低，因为垃圾此时产生的较少，在进行大量的复制则是浪费操作。如果没有大量的垃圾产生将会进入到另一种模式。</li>
+<li><strong>Mark and Sweep</strong>：当找到一个活的对象以后，给对象设置标记，当对于所有的活的对象标记完成以后，开始进行清理，没标记的对象的空间将会被释放。但是此时heap里的空间是不连续的。如果需要得到连续空间则需要对空间进行整理。</li>
+</ul>
+</li>
+<li>Initialise Order:<br><img src="https://raw.githubusercontent.com/eziceice/blog/master/java/JavaInitializeOrder.png" alt="InitizliseOrder"></li>
+</ul>
+<h2 id="6-Access-Modifier"><a href="#6-Access-Modifier" class="headerlink" title="6. Access Modifier"></a>6. Access Modifier</h2><ul>
+<li>对于类的访问权限只有两种，一种是default访问权限，另一种是public。内部类可以是private或者protected的。</li>
+</ul>
+<h2 id="7-复用"><a href="#7-复用" class="headerlink" title="7. 复用"></a>7. 复用</h2><ul>
+<li>使用final的通常原因是把方法锁定，以防止任何继承类修改它的含义。想要确保在继承中使方法的行为保持不变，并且不会被覆盖，则使用final。类中所有的private方法都是隐式的指定final的。</li>
+<li>当将某个类整体定义为final时，就表明你不打算继承该类，而且也不允许别人这样做。final类所中所有的方法都是隐式的指定为final的，因此无法被覆盖。</li>
+<li>constructor也是static方法。</li>
+<li>优先使用组合或者代理，最后考虑使用继承。</li>
+</ul>
+<h2 id="7-Polymorphism"><a href="#7-Polymorphism" class="headerlink" title="7. Polymorphism"></a>7. Polymorphism</h2><ul>
+<li>Java中除了static方法和final方法之外，其他所有方法都是动态绑定。</li>
+<li>static方法和field都是没有polymorphism的。</li>
+</ul>
+<h2 id="8-Interface"><a href="#8-Interface" class="headerlink" title="8. Interface"></a>8. Interface</h2><ul>
+<li>Interface只可以使用public或者包访问权限，interface的field隐式的为static和final的，interface中的方法是隐式的为public的。Java8中可以为interface中添加default和static方法。</li>
+<li>对于Interface类之间的继承，可以是多重继承。</li>
+<li>Factory模式就是使用的interface来实现的。</li>
+</ul>
+<h2 id="8-Inner-Class"><a href="#8-Inner-Class" class="headerlink" title="8. Inner Class"></a>8. Inner Class</h2><ul>
+<li>Inner Class对象会包含有外部对象的引用，并且可以使用外部对象的一切成员，不需要任何条件。通过使用外部对象的名字.this,可以获取外部对象的引用。</li>
+<li>如果一个匿名内部类想要使用一个在其外部类定义的对象作为参数，则该参数必须为final。</li>
+<li>嵌套类（static内部类在外部类的内部）可以使用在interface中作为公有代码使用(Java8之后不需要)。</li>
+<li>每个内部类都能独立地继承自一个接口的实现，所以无论外围类是否已经继承了某个接口的实现，对于内部类都没有影响。内部类有效的解决了多重继承的问题，也就是说，内部类（不是一个内部类）允许继承多个非接口类型。</li>
+</ul>
+<h2 id="9-Collection"><a href="#9-Collection" class="headerlink" title="9. Collection"></a>9. Collection</h2><ul>
+<li>LinkedList可以用来实现stack/queue等数据结构。<code>peek</code>方法返回第一个元素，但不会移除。</li>
+<li>HashMap结构(Array+LinkedList)<br><img src="https://raw.githubusercontent.com/eziceice/blog/master/java/HashMap%E7%BB%93%E6%9E%84.png" alt="HashMap"></li>
+<li>LinkedHashMap(HashMap + Doubly LinkedList - 用来维护顺序)<br><img src="https://raw.githubusercontent.com/eziceice/blog/master/java/LinkedHashMap%E7%BB%93%E6%9E%84.png" alt="LinkedHashMap"></li>
+<li>TreeMap(Red-Black Tree)</li>
+<li>Collection的线程安全性：如果需要线程安全的集合，使用<code>ConcurrentHashMap/CopyonWriteArrayList/CopyonWriteArraySet</code>或者使用<code>Collections.synchronizedList/Map/Set</code>方法。<br><img src="https://raw.githubusercontent.com/eziceice/blog/master/java/CollectionThreadFeature.png" alt="集合是否线程安全"></li>
+<li>Queue是线程安全的，通过LinkedList向上转型变可得到Queue，peek()和element()方法都在不移除的情况下返回队头，当队列为空时，peek返回null，element返回NoSuchElementException。poll()和remove()方法将移除并返回队头，当队列为空时，poll返回null，remove返回NoSuchElementException。</li>
+<li>任何是实现Iterable接口的类都可以用于foreach循环。foreach可以用于数组，但是数组并不是一个Iterable。</li>
+<li>Java 中的Collection关系：<br><img src="https://raw.githubusercontent.com/eziceice/blog/master/java/Collection.png" alt="Collection"></li>
+</ul>
+<h2 id="10-String"><a href="#10-String" class="headerlink" title="10. String"></a>10. String</h2><ul>
+<li>String是immutable对象。</li>
+</ul>
+<h2 id="11-Type-Information"><a href="#11-Type-Information" class="headerlink" title="11. Type Information"></a>11. Type Information</h2><ul>
+<li>RTTI：Run Time Type Information。在运行时，识别一个对象的类型。</li>
+<li>Class对象仅在需要的时候才被加载，static初始化是在类加载的时候进行的。</li>
+<li>使用.class语法来获得对类的引用不会引发初始化，但为了产生class引用，使用Class.forName()立刻就进行了初始化(static区域初始化)。</li>
+<li>使用instanceof或者isInstance()方法与直接比较Class对象有一个很重要的差别，instanceof保持了类型的概念，它指的是该类或者该类的派生类，而比较getClass和.class则不会考虑继承或者实现。</li>
+</ul>
+<h2 id="12-Generics"><a href="#12-Generics" class="headerlink" title="12. Generics"></a>12. Generics</h2><ul>
+<li>泛型不能显示的用于运行时类型的操作之中，例如转型，instanceof操作或者new表达式，因为所有关于参数的类型信息都被擦除掉了。</li>
+<li>在泛型中创建数组推荐使用<code>Array.newInstance()</code>。</li>
+<li>在使用泛型的边界中可以使用extends关键字例如<code>&lt;T extends SomeClass &amp; SomeInterface&gt;</code>。</li>
+<li>使用<code>List&lt;? extends Fruit&gt; fList = new ArrayList&lt;Apple&gt;()</code>时，任何类型的object都不能被添加到这个容器中，因为该容器的上界为Fruit类型无法确保插入非Fruit类型会对AppleList造成影响，编译器会对插入的任何类型进行限制。</li>
+<li>使用<code>List&lt;? super Apple&gt; aList = new ArrayList&lt;Apple&gt;()</code>时，此时编译器允许插入任何的Apple类型或者其子类型，因为此时Apple是下界，因此可以保证插入的值总是Apple或者Apple的子类型。</li>
+<li>一个类不能实现同一个泛型接口的两种变体，由于擦除的原因，这两个变体会成为相同的接口。</li>
+</ul>
+<h2 id="13-Arrays"><a href="#13-Arrays" class="headerlink" title="13. Arrays"></a>13. Arrays</h2><ul>
+<li>使用<code>System.arraycopy()</code>来复制数组比for循环复制要快很多。</li>
+</ul>
+<h2 id="14-More-in-Collections"><a href="#14-More-in-Collections" class="headerlink" title="14. More in Collections"></a>14. More in Collections</h2><ul>
+<li>TreeSet是SortedSet在Java中的唯一实现。<ul>
+<li>subSet(fromElement, toElement)生成Set的子集。</li>
+<li>headSet(toElement), 返回所有比toElement小的元素的子集。</li>
+<li>tailSet(fromElement), 返回大于等于fromElement的元素的子集。</li>
+</ul>
+</li>
+<li>对于插入或者删除操作，LinkedHashSet比HashSet的代价更高，因为维护LinkedHashSet中的链表需要额外的开销。同理于LinkedHashMap和HashMap。迭代速度Linked结构将会更快，由于有链表。</li>
+</ul>
+<h2 id="15-Thread"><a href="#15-Thread" class="headerlink" title="15. Thread"></a>15. Thread</h2><ul>
+<li>实现了Runnable接口的类必须附着在一个Thread上才能开启多线程任务，单独实现Runnable接口并不具备多线程能力。</li>
+<li>尽量使用Executors启动线程任务。<strong>execute()执行runnable, submit()执行callable。</strong><ul>
+<li>CachedThreadPool：每个任务都创建一个线程，回收旧线程时停止创建新线程。</li>
+<li>FixedThreadPool：有限的线程集来创建线程。</li>
+<li>SingleThreadPool：只有一个线程的线程池，如果有多个任务其他任务将会被挂起然后按顺序执行。</li>
+</ul>
+</li>
+<li>使用Callable接口的线程将可以产生返回值，实现的是call()方法，会产生一个<code>Future&lt;T&gt;</code>的泛型对象，在使用该对象之前可以使用isDone()方法查看线程是否完成。直接调用get()会阻塞在该方法直到线程执行完成返回。</li>
+<li>通过yield()方法可以提醒线程调度器该线程已经执行完成。但是并不会一定保证线程执行器就会去执行其他的线程。</li>
+<li>Daemon线程（后台线程），是指程序运行的时候在后台提供一种通用服务的线程，并且这种线程并不属于程序中不可缺少的部分。当所有的非后台线程结束时，程序也就终止了，并且会杀死进程中所有的后台线程。main()就是一个后台线程。如果一个线程是后台线程，那么该后台线程创建的任何线程都将自动被设置为后台线程。</li>
+<li>一个线程可以在另一个线程上调用join()方法，其效果就是等待一段时间直到新的线程结束在继续执行旧的线程。使用interrupt()方法可以将线程打断。</li>
+<li>线程中的exception如果不在run()方法中处理的话，就无法被捕获。通过使用在每个Thread上添加一个Thread.UncaughtExceptionHandler异常处理器，就可以在线程中捕获到未被捕获的异常。</li>
+<li>使用synchronized关键字，可以保护对方法的同步(上锁)，意味着同一时间只有一个线程可以对该方法进行操作。如果该方法目前在使用中，任何想要使用该方法的线程都会被阻塞。synchroinzed也可以使用在方法内部，比如锁一个对象然后进行一系列操作。尽量在block中使用synchronized而不是synchronized方法。</li>
+<li>使用ReentrantLock对象，可以对方法进行显示的lock和unlock。同时ReentrantLock对象有tryLock的方法，可以尝试着去获取锁。</li>
+<li>volatile关键字可以保证一个域是具备原子性的。尽量使用synchronized而不是volatile，因为Java中只有赋值和返回操作是原子性的，递增操作不是原子性的。</li>
+<li>wait()可以使线程挂起，直到收到了notify()或者notifyAll()或者wait()时间结束才可以继续执行。wait()期间会释放对锁的资源。</li>
+<li>使用LinkedBlockingQueue(无大小限制)可以非常容易的实现消费者和生产者的模型。还可以使用ArrayBlockingQueue，它是一个具有固定尺寸的阻塞队列。</li>
+<li>使用PipedWriter类或者PipedReader类可以对多线程下的输入输出提供支持。它们实际上就是一个BlockingQueue。</li>
+<li>Executor结构：<br><img src="https://raw.githubusercontent.com/eziceice/blog/master/java/Executor.png" alt="Executor"></li>
+<li>Thread状态：<br><img src="https://raw.githubusercontent.com/eziceice/blog/master/java/ThreadStatus.png" alt="Thread"></li>
+</ul>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/eziceice" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                        <li>
+                            <a href="https://www.linkedin.com/in/yutian-li-8070b9102/" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                        <li>
+                            <a href="mailto:liyutian6@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2021 Yutian Li<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

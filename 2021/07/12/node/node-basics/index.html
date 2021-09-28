@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!--Description-->
+
+    
+
+    
+        <meta name="description" content="Key Usage/Conceptsvar vs let vs const123456789101112var:  function scoped  undefined when accessing a variable before it&amp;#x27;s declaredlet:  block sc"/>
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Yutian Li"/>
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="Node"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="Key Usage/Conceptsvar vs let vs const123456789101112var:  function scoped  undefined when accessing a variable before it&amp;#x27;s declaredlet:  block sc"/>
+    
+
+    <!--Open Graph Site Name-->
+        <meta property="og:site_name" content="Yutian&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article"/>
+    
+
+    <!--Page Cover-->
+    
+    
+        <meta property="og:image" content="network://example.comimg/home-bg.jpg"/>
+    
+
+        <meta name="twitter:card" content="summary_large_image"/>
+
+    
+
+    
+        <meta name="twitter:image" content="network://example.comimg/home-bg.jpg"/>
+    
+
+    <!-- Title -->
+    
+    <title>Node - Yutian&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet"/>
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">笙歌院落</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="https://github.com/eziceice">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>Node</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2021-07-12
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/javascript/">#javascript</a> <a href="/tags/node/">#node</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/programming-languages/">programming languages</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="Key-Usage-Concepts"><a href="#Key-Usage-Concepts" class="headerlink" title="Key Usage/Concepts"></a>Key Usage/Concepts</h2><h3 id="var-vs-let-vs-const"><a href="#var-vs-let-vs-const" class="headerlink" title="var vs let vs const"></a><code>var</code> vs <code>let</code> vs <code>const</code></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var:</span><br><span class="line">  function scoped</span><br><span class="line">  undefined when accessing a variable before it&#x27;s declared</span><br><span class="line"></span><br><span class="line">let:</span><br><span class="line">  block scoped</span><br><span class="line">  ReferenceError when accessing a variable before it&#x27;s declared</span><br><span class="line"></span><br><span class="line">const:</span><br><span class="line">  block scoped</span><br><span class="line">  ReferenceError when accessing a variable before it&#x27;s declared</span><br><span class="line">  can&#x27;t be reassigned</span><br></pre></td></tr></table></figure>
+
+<h3 id="Lambda"><a href="#Lambda" class="headerlink" title="Lambda"></a>Lambda</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Basic syntax:</span><br><span class="line"><span class="function"><span class="params">param</span> =&gt;</span> expression</span><br><span class="line">param =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">return</span> a + param;</span><br><span class="line">&#125;</span><br><span class="line">(param1, paramN) =&gt; &#123;</span><br><span class="line">   <span class="keyword">let</span> a = <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">return</span> a + param1 + paramN;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Advanced syntax:</span><br><span class="line"><span class="function"><span class="params">params</span> =&gt;</span> (&#123;<span class="attr">foo</span>: <span class="string">&quot;a&quot;</span>&#125;) <span class="comment">// returning the object &#123;foo: &quot;a&quot;&#125;</span></span><br><span class="line">(a=<span class="number">400</span>, b=<span class="number">20</span>, c) =&gt; expression</span><br><span class="line"></span><br><span class="line"><span class="attr">Destructuring</span>:</span><br><span class="line"><span class="function">(<span class="params">[a, b] = [<span class="number">10</span>, <span class="number">20</span>]</span>) =&gt;</span> a + b;  <span class="comment">// result is 30</span></span><br><span class="line"><span class="function">(<span class="params">&#123; a, b &#125; = &#123; a: <span class="number">10</span>, b: <span class="number">20</span> &#125;</span>) =&gt;</span> a + b; <span class="comment">// result is 30</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="apply-vs-bind-vs-call"><a href="#apply-vs-bind-vs-call" class="headerlink" title="apply vs bind vs call"></a><code>apply</code> vs <code>bind</code> vs <code>call</code></h4><p><img src="https://raw.githubusercontent.com/eziceice/blog/master/node.js/applyvsbindvscall.jpeg" alt="apply vs bind vs call"></p>
+<ul>
+<li>  <em>Call</em>  invokes the function and allows you to pass in arguments one by one.</li>
+<li>  <em>Apply</em>  invokes the function and allows you to pass in arguments as an array.</li>
+<li>  <em>Bind</em>  returns a new function, allowing you to pass in a this array and any number of arguments.</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">call: </span><br><span class="line"><span class="keyword">var</span> person1 = &#123;<span class="attr">firstName</span>: <span class="string">&#x27;Jon&#x27;</span>, <span class="attr">lastName</span>: <span class="string">&#x27;Kuperman&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> person2 = &#123;<span class="attr">firstName</span>: <span class="string">&#x27;Kelly&#x27;</span>, <span class="attr">lastName</span>: <span class="string">&#x27;King&#x27;</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params">greeting</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(greeting + <span class="string">&#x27; &#x27;</span> + <span class="built_in">this</span>.firstName + <span class="string">&#x27; &#x27;</span> + <span class="built_in">this</span>.lastName);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">say.call(person1, <span class="string">&#x27;Hello&#x27;</span>); <span class="comment">// Hello Jon Kuperman</span></span><br><span class="line">say.call(person2, <span class="string">&#x27;Hello&#x27;</span>); <span class="comment">// Hello Kelly King</span></span><br><span class="line"></span><br><span class="line">apply:</span><br><span class="line"><span class="keyword">var</span> person1 = &#123;<span class="attr">firstName</span>: <span class="string">&#x27;Jon&#x27;</span>, <span class="attr">lastName</span>: <span class="string">&#x27;Kuperman&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> person2 = &#123;<span class="attr">firstName</span>: <span class="string">&#x27;Kelly&#x27;</span>, <span class="attr">lastName</span>: <span class="string">&#x27;King&#x27;</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params">greeting</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(greeting + <span class="string">&#x27; &#x27;</span> + <span class="built_in">this</span>.firstName + <span class="string">&#x27; &#x27;</span> + <span class="built_in">this</span>.lastName);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">say.apply(person1, [<span class="string">&#x27;Hello&#x27;</span>]); <span class="comment">// Hello Jon Kuperman</span></span><br><span class="line">say.apply(person2, [<span class="string">&#x27;Hello&#x27;</span>]); <span class="comment">// Hello Kelly King</span></span><br><span class="line"></span><br><span class="line">bind:</span><br><span class="line"><span class="keyword">var</span> person1 = &#123;<span class="attr">firstName</span>: <span class="string">&#x27;Jon&#x27;</span>, <span class="attr">lastName</span>: <span class="string">&#x27;Kuperman&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> person2 = &#123;<span class="attr">firstName</span>: <span class="string">&#x27;Kelly&#x27;</span>, <span class="attr">lastName</span>: <span class="string">&#x27;King&#x27;</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Hello &#x27;</span> + <span class="built_in">this</span>.firstName + <span class="string">&#x27; &#x27;</span> + <span class="built_in">this</span>.lastName);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sayHelloJon = say.bind(person1);</span><br><span class="line"><span class="keyword">var</span> sayHelloKelly = say.bind(person2);</span><br><span class="line"></span><br><span class="line">sayHelloJon(); <span class="comment">// Hello Jon Kuperman</span></span><br><span class="line">sayHelloKelly(); <span class="comment">// Hello Kelly King</span></span><br></pre></td></tr></table></figure>
+<p><code>call</code> and <code>apply</code> are pretty interchangeable. Just decide whether it’s easier to send in an array or a comma separated list of arguments.</p>
+<p><code>bind</code> is a bit different. It returns a new function. <code>call</code> and <code>apply</code> execute the current function immediately.</p>
+<h3 id="Comparison-Operators"><a href="#Comparison-Operators" class="headerlink" title="Comparison Operators"></a><a target="_blank" rel="noopener" href="https://www.w3schools.com/js/js_comparisons.asp">Comparison Operators</a></h3><h2 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h2><h3 id="instanceOf-vs-typeof"><a href="#instanceOf-vs-typeof" class="headerlink" title="instanceOf vs typeof"></a><code>instanceOf</code> vs <code>typeof</code></h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">Use  <span class="keyword">instanceof</span> <span class="keyword">for</span> custom types:</span><br><span class="line"><span class="keyword">var</span> ClassFirst = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> ClassSecond = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> ClassFirst();</span><br><span class="line"><span class="keyword">typeof</span> instance; <span class="comment">// object</span></span><br><span class="line"><span class="keyword">typeof</span> instance == <span class="string">&#x27;ClassFirst&#x27;</span>; <span class="comment">// false</span></span><br><span class="line">instance <span class="keyword">instanceof</span> <span class="built_in">Object</span>; <span class="comment">// true</span></span><br><span class="line">instance <span class="keyword">instanceof</span> ClassFirst; <span class="comment">// true</span></span><br><span class="line">instance <span class="keyword">instanceof</span> ClassSecond; <span class="comment">// false </span></span><br><span class="line"></span><br><span class="line">Use <span class="keyword">typeof</span> <span class="keyword">for</span> simple built <span class="keyword">in</span> types:</span><br><span class="line"><span class="string">&#x27;example string&#x27;</span> <span class="keyword">instanceof</span> <span class="built_in">String</span>; <span class="comment">// false</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">&#x27;example string&#x27;</span> == <span class="string">&#x27;string&#x27;</span>; <span class="comment">// true</span></span><br><span class="line"><span class="string">&#x27;example string&#x27;</span> <span class="keyword">instanceof</span> <span class="built_in">Object</span>; <span class="comment">// false</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="string">&#x27;example string&#x27;</span> == <span class="string">&#x27;object&#x27;</span>; <span class="comment">// false</span></span><br><span class="line"><span class="literal">true</span> <span class="keyword">instanceof</span> <span class="built_in">Boolean</span>; <span class="comment">// false</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span> == <span class="string">&#x27;boolean&#x27;</span>; <span class="comment">// true</span></span><br><span class="line"><span class="number">99.99</span> <span class="keyword">instanceof</span> <span class="built_in">Number</span>; <span class="comment">// false</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">99.99</span> == <span class="string">&#x27;number&#x27;</span>; <span class="comment">// true</span></span><br><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125; <span class="keyword">instanceof</span> <span class="built_in">Function</span>; <span class="comment">// true</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;&#125; == <span class="string">&#x27;function&#x27;</span>; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">Use <span class="keyword">instanceof</span> <span class="keyword">for</span> complex built <span class="keyword">in</span> types:</span><br><span class="line"><span class="regexp">/regularexpression/</span> <span class="keyword">instanceof</span> <span class="built_in">RegExp</span>; <span class="comment">// true</span></span><br><span class="line"><span class="keyword">typeof</span> /regularexpression/; <span class="comment">// object</span></span><br><span class="line">[] <span class="keyword">instanceof</span> <span class="built_in">Array</span>; <span class="comment">// true</span></span><br><span class="line"><span class="keyword">typeof</span> []; <span class="comment">//object</span></span><br><span class="line">&#123;&#125; <span class="keyword">instanceof</span> <span class="built_in">Object</span>; <span class="comment">// true</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;&#125;; <span class="comment">// object</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction#where_to_find_javascript_information">JavaScript Introduction</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.typescriptlang.org/docs/handbook/2/basic-types.html">TypeScript Introduction</a></li>
+</ol>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/eziceice" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                        <li>
+                            <a href="https://www.linkedin.com/in/yutian-li-8070b9102/" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                        <li>
+                            <a href="mailto:liyutian6@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2021 Yutian Li<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>

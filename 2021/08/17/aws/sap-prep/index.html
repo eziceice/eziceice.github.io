@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <!--Description-->
+
+    
+
+    
+        <meta name="description" content="AWS SAP Exam PrepareIdentity &amp;amp; FederationIAM
+Explicit DENY overrides ALLOW
+When you assume a role, you give up your original permissions and take "/>
+    
+
+    <!--Author-->
+    
+        <meta name="author" content="Yutian Li"/>
+    
+
+    <!--Open Graph Title-->
+    
+        <meta property="og:title" content="AWS Solution Architect Professional"/>
+    
+
+    <!--Open Graph Description-->
+    
+        <meta property="og:description" content="AWS SAP Exam PrepareIdentity &amp;amp; FederationIAM
+Explicit DENY overrides ALLOW
+When you assume a role, you give up your original permissions and take "/>
+    
+
+    <!--Open Graph Site Name-->
+        <meta property="og:site_name" content="Yutian&#39;s Blog"/>
+
+    <!--Type page-->
+    
+        <meta property="og:type" content="article"/>
+    
+
+    <!--Page Cover-->
+    
+    
+        <meta property="og:image" content="network://example.comimg/home-bg.jpg"/>
+    
+
+        <meta name="twitter:card" content="summary_large_image"/>
+
+    
+
+    
+        <meta name="twitter:image" content="network://example.comimg/home-bg.jpg"/>
+    
+
+    <!-- Title -->
+    
+    <title>AWS Solution Architect Professional - Yutian&#39;s Blog</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- Custom CSS -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    <!-- Custom Fonts -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css"/>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Gallery -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.css" type="text/css" rel="stylesheet"/>
+
+    <!-- Google Analytics -->
+    
+
+
+    <!-- favicon -->
+    
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+
+    <!-- Menu -->
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">笙歌院落</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <a href="/">
+                            
+                                Home
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/archives">
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/tags">
+                            
+                                Tags
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories">
+                            
+                                Categories
+                            
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="https://github.com/eziceice">
+                            
+                                <i class="fa fa-github fa-stack-2x"></i>
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+    <!-- Main Content -->
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
+
+<header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <h1>AWS Solution Architect Professional</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2021-08-17
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/aws/">#aws</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/cloud/">cloud</a>
+
+                    
+                </div>
+            
+
+            <!-- Gallery -->
+            
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h1 id="AWS-SAP-Exam-Prepare"><a href="#AWS-SAP-Exam-Prepare" class="headerlink" title="AWS SAP Exam Prepare"></a>AWS SAP Exam Prepare</h1><h2 id="Identity-amp-Federation"><a href="#Identity-amp-Federation" class="headerlink" title="Identity &amp; Federation"></a>Identity &amp; Federation</h2><h3 id="IAM"><a href="#IAM" class="headerlink" title="IAM"></a>IAM</h3><ul>
+<li>Explicit DENY overrides ALLOW</li>
+<li>When you assume a role, you give up your original permissions and take the permissions assigned to the role.</li>
+</ul>
+<h3 id="STS"><a href="#STS" class="headerlink" title="STS"></a>STS</h3><ul>
+<li>AssumeRole with <strong>ExternalID</strong></li>
+</ul>
+<h3 id="Identity-Federation"><a href="#Identity-Federation" class="headerlink" title="Identity Federation"></a>Identity Federation</h3><ul>
+<li>Amazon SSO is the new managed and simpler way to replace SAML 2.0 Federation.</li>
+<li>Use Custom Identify Broker Application only if identity provider is not compatible with with SAML 2.0.</li>
+<li>Web Identity Federation - Not recommended by AWS - use Cognito instead.</li>
+</ul>
+<h3 id="AWS-Directory-Services"><a href="#AWS-Directory-Services" class="headerlink" title="AWS Directory Services"></a>AWS Directory Services</h3><ul>
+<li>AWS Managed Microsoft AD (Users are created in on-prem AD and AWS managed AD)</li>
+<li>AD Connector (Proxy - all users are still managed in on-prem AD)</li>
+<li>Simple AD (All users managed in AWS)</li>
+</ul>
+<h2 id="Security"><a href="#Security" class="headerlink" title="Security"></a>Security</h2><h3 id="CloudTrail"><a href="#CloudTrail" class="headerlink" title="CloudTrail"></a>CloudTrail</h3><ul>
+<li>CloudWatch Events</li>
+<li>CloudTrail Delivery in CloudWatch Logs</li>
+<li>CloudTrail Delivery in S3</li>
+</ul>
+<h3 id="SSL-Encryption-SNI-amp-MITM"><a href="#SSL-Encryption-SNI-amp-MITM" class="headerlink" title="SSL Encryption, SNI &amp; MITM"></a>SSL Encryption, SNI &amp; MITM</h3><ul>
+<li>SNI solves the problem of loading multiple SSL certificates onto one web server</li>
+<li>Only works for ALB &amp; NLB and CloudFront</li>
+<li>Route53 supports DNSSEC for DNS service</li>
+</ul>
+<h3 id="ACM"><a href="#ACM" class="headerlink" title="ACM"></a>ACM</h3><ul>
+<li>ACM is a regional service</li>
+</ul>
+<h3 id="CloudHSM"><a href="#CloudHSM" class="headerlink" title="CloudHSM"></a>CloudHSM</h3><ul>
+<li>AWS provisions encryption hardware, dedicated hardware</li>
+<li>You manage your own encryption keys entirely, not AWS</li>
+</ul>
+<h2 id="Compute-amp-Load-Balancing"><a href="#Compute-amp-Load-Balancing" class="headerlink" title="Compute &amp; Load Balancing"></a>Compute &amp; Load Balancing</h2><h3 id="AWS-Lambda"><a href="#AWS-Lambda" class="headerlink" title="AWS Lambda"></a>AWS Lambda</h3><ul>
+<li>$Latest version is mutable</li>
+<li>Published version is immutable and all versions can be invoked differently</li>
+<li>Alias is mutable and can be used as Canary deployment</li>
+</ul>
+<h3 id="Elastic-Load-Balancer"><a href="#Elastic-Load-Balancer" class="headerlink" title="Elastic Load Balancer"></a>Elastic Load Balancer</h3><ul>
+<li>NLB has one static IP per AZ, and supports assigning Elastic IP</li>
+<li>NLB works with VPC endpoint/PrivateLink</li>
+<li>ALB can have Lambda as target group, NLB can’t</li>
+<li>ALB cross-zone load balancing is always enabled with no additional charges</li>
+<li>NLB cross-zone load balancing is disabled by default</li>
+<li>Stickiness doesn’t work for NLB</li>
+</ul>
+<h3 id="API-Gateway"><a href="#API-Gateway" class="headerlink" title="API Gateway"></a>API Gateway</h3><ul>
+<li>API gateway has a 10MB payload size limit</li>
+<li>API gateway has a 28 seconds timeout maximum</li>
+</ul>
+<h3 id="Route-53"><a href="#Route-53" class="headerlink" title="Route 53"></a>Route 53</h3><ul>
+<li>A: hostname to IPv4</li>
+<li>AAA: hostname to IPv6</li>
+<li>CNAME: hostname to hostname</li>
+<li>Alias: hostname to AWS resource</li>
+<li>Route 53 health checks can monitor CW alarms and integrate with CW metrics</li>
+</ul>
+<h2 id="Storage"><a href="#Storage" class="headerlink" title="Storage"></a>Storage</h2><h3 id="EBS-amp-Local-Instance-Store"><a href="#EBS-amp-Local-Instance-Store" class="headerlink" title="EBS &amp; Local Instance Store"></a>EBS &amp; Local Instance Store</h3><ul>
+<li>gp2: 3 IOPS/GiB, minimum 100 IOPS, burst to 3000 IOPS, max 16000 IOPS</li>
+<li>io1: Min 100 IOPS, Max 64000 IOPS (Nitro) or 32000</li>
+<li>st1: Throughput Optimised HDD, 500 GiB - 16 TiB, 500 MiB/s throughput</li>
+<li>sc1: Cold HDD, Infrequently accessed data, 250 GiB - 16 TiB, 250 MiB/s throughput</li>
+<li>RAID Configurations: 0, write to either volume. 1, write to both volume.</li>
+</ul>
+<h3 id="S3"><a href="#S3" class="headerlink" title="S3"></a>S3</h3><ul>
+<li>At least 3500 PUT/COPY/POST/DELETE and 5500 GET/HEAD requests per second per prefix in a bucket</li>
+</ul>
+<h2 id="Caching"><a href="#Caching" class="headerlink" title="Caching"></a>Caching</h2><h3 id="CloudFront"><a href="#CloudFront" class="headerlink" title="CloudFront"></a>CloudFront</h3><ul>
+<li>Signed URL = access to individual files</li>
+<li>Signed Cookies = access to multiple files</li>
+<li>Cache based on:<ul>
+<li>Headers</li>
+<li>Session Cookies</li>
+<li>Query String Parameters</li>
+</ul>
+</li>
+<li>Cache lives at each CloudFront Edge Location</li>
+</ul>
+<h3 id="Redis-vs-Memcached"><a href="#Redis-vs-Memcached" class="headerlink" title="Redis vs Memcached"></a>Redis vs Memcached</h3><ul>
+<li>Redis:<ul>
+<li>Multi AZ with Auto-Failover</li>
+<li>Read Replicas to scale reads and have high availability</li>
+<li>Persistent, Data Durability, Read Only File Feature, backup and restore features</li>
+</ul>
+</li>
+<li>Memcached:<ul>
+<li>Multi-node for partitioning of data (sharding)</li>
+<li>Non persistent</li>
+<li>No backup and restore</li>
+<li>Multi-threaded architecture</li>
+</ul>
+</li>
+</ul>
+<h2 id="Databases"><a href="#Databases" class="headerlink" title="Databases"></a>Databases</h2><h3 id="DynamoDB"><a href="#DynamoDB" class="headerlink" title="DynamoDB"></a>DynamoDB</h3><ul>
+<li>Maximum size of an item is 400KB</li>
+<li>LSI - Local Secondary Index<ul>
+<li>Keep the same primary key</li>
+<li>Select an alternative sort key</li>
+<li>Must be defined at table creation time</li>
+</ul>
+</li>
+<li>GSI - Global Secondary Index<ul>
+<li>Change the primary key and optional sort key</li>
+<li>Can be defined after the table is created</li>
+</ul>
+</li>
+</ul>
+<h3 id="Aurora"><a href="#Aurora" class="headerlink" title="Aurora"></a>Aurora</h3><ul>
+<li>Global Aurora Database - recommended<ul>
+<li>1 Primary Region</li>
+<li>Up to 5 secondary regions, replication lag is less than 1 second</li>
+<li>Up to 16 read replicas per secondary region</li>
+<li>Helps of decreasing latency</li>
+<li>Promoting another region (for disaster recovery) has an RTO of &lt; 1 minute\</li>
+</ul>
+</li>
+<li>Aurora Multi-Master<ul>
+<li>Immediate failover</li>
+<li>Every node dose RW</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/eziceice/blog/master/aws/RDS-multi-region-failover.png">RDS Multi-Region Failover</a></li>
+</ul>
+<h2 id="Service-Communication"><a href="#Service-Communication" class="headerlink" title="Service Communication"></a>Service Communication</h2><h3 id="Step-Functions-Tasks"><a href="#Step-Functions-Tasks" class="headerlink" title="Step Functions - Tasks"></a>Step Functions - Tasks</h3><ul>
+<li>Lambda Tasks<ul>
+<li>Lambda function</li>
+</ul>
+</li>
+<li>Activity Tasks<ul>
+<li>Activity worker (HTTP), EC2 Instances, mobile device, on premise DC</li>
+<li>They poll the Step functions service</li>
+</ul>
+</li>
+<li>Service Tasks:<ul>
+<li>Connected to a supported AWS service</li>
+<li>Lambda function, ECS task, Fargate, DynamoDB, Batch job, SNS &amp; SQS</li>
+</ul>
+</li>
+<li>Wait Task:<ul>
+<li>To wait for a duration or util a timestamp</li>
+</ul>
+</li>
+</ul>
+<h3 id="SWF-Simple-Workflow-Service"><a href="#SWF-Simple-Workflow-Service" class="headerlink" title="SWF - Simple Workflow Service"></a>SWF - Simple Workflow Service</h3><ul>
+<li>Step functions is recommended to be used for new applications, except:<ul>
+<li>if external signals to intervene in the processes is needed</li>
+<li>if child processes that return values to parent processes is needed</li>
+<li>If Amazon Mechanical Turk is needed</li>
+</ul>
+</li>
+</ul>
+<h3 id="SQS"><a href="#SQS" class="headerlink" title="SQS"></a>SQS</h3><ul>
+<li>Message size of max 256KB (use metadata in S3 for large messages)</li>
+<li>Messages can be processed twice by consumer (in case of failure, timeouts, etc). Idempotency at the consumer level is very important.</li>
+<li>Set the queue visibility timeout to 6 times the timeout of your lambda function</li>
+</ul>
+<h2 id="Data-Engineering"><a href="#Data-Engineering" class="headerlink" title="Data Engineering"></a>Data Engineering</h2><h3 id="Kinesis-Data-Streams"><a href="#Kinesis-Data-Streams" class="headerlink" title="Kinesis Data Streams"></a>Kinesis Data Streams</h3><ul>
+<li>Kinesis Streams: low latency streaming ingest at scale</li>
+<li>Multiple applications can consume the same stream (pub-sub model)</li>
+<li>Real-time processing with scale of throughput</li>
+<li>Once data is inserted in Kinesis, it can’t be deleted, will stay there until the data retention period is gone.</li>
+<li>Producer:<ul>
+<li>1mb/s or 1000 messages/s at write PER SHARD, otherwise “ProvisionedThroughputException” (add shards)</li>
+</ul>
+</li>
+<li>Consumer Classic:<ul>
+<li>2mb/s at read PER SHARD across all consumers</li>
+<li>5 API calls per second PER SHARD across all consumers</li>
+</ul>
+</li>
+<li>Consumer Enhanced Fan-Out:<ul>
+<li>2mb/s at read PER SHARD, PER ENHANCED CONSUMER</li>
+<li>No API calls needed (push model)</li>
+</ul>
+</li>
+<li>Data Retention:<ul>
+<li>24 hours by default and can be extended to 7 days</li>
+</ul>
+</li>
+</ul>
+<h3 id="Kinesis-Analytics"><a href="#Kinesis-Analytics" class="headerlink" title="Kinesis Analytics"></a>Kinesis Analytics</h3><ul>
+<li>Kinesis Analytics: perform real-time analytics on streams using SQL</li>
+</ul>
+<h3 id="Kinesis-Firehose"><a href="#Kinesis-Firehose" class="headerlink" title="Kinesis Firehose"></a>Kinesis Firehose</h3><ul>
+<li>Serverless, auto-scaling service - <strong>near real time (Because of the firehose buffer)</strong></li>
+<li>Kinesis Firehose: load streams into S3, Redshift, ElasticSearch &amp; Splunk</li>
+<li>Destinations:<ul>
+<li>AWS destinations:<ul>
+<li>S3</li>
+<li>Redshift (Copy through S3)</li>
+<li>Elastic Search</li>
+</ul>
+</li>
+<li>3rd Party Destinations:<ul>
+<li>Splunk</li>
+<li>New Relic</li>
+<li>etc.</li>
+</ul>
+</li>
+<li>Custom Destinations:<ul>
+<li>HTTP endpoint</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Source records &amp;&amp; failed records can be sent to S3 as well</li>
+</ul>
+<h3 id="Redshift"><a href="#Redshift" class="headerlink" title="Redshift"></a>Redshift</h3><ul>
+<li>Leader node: for query planning, results aggregation</li>
+<li>Compute node: for performing the queries, send results to leader</li>
+</ul>
+<h2 id="Monitoring"><a href="#Monitoring" class="headerlink" title="Monitoring"></a>Monitoring</h2><h3 id="CloudWatch"><a href="#CloudWatch" class="headerlink" title="CloudWatch"></a>CloudWatch</h3><ul>
+<li>CloudWatch Logs Agent<ul>
+<li>Old version of the agent</li>
+<li>Can only send to CloudWatch Logs</li>
+</ul>
+</li>
+<li>CloudWatch Unified Agent<ul>
+<li>Collect additional system-level metrics such as RAM, processes, etc…</li>
+<li>Collect logs to send to CW logs</li>
+<li>Centralised configurations using SSM Parameter Store</li>
+</ul>
+</li>
+<li>Both agents cannot send logs to Kinesis (have to use KCL)</li>
+</ul>
+<h2 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h2><h3 id="CloudFormation"><a href="#CloudFormation" class="headerlink" title="CloudFormation"></a>CloudFormation</h3><ul>
+<li>DeletionPolicy<ul>
+<li>Retain: Specify on resources to preserve/backup in case of CFN deletes</li>
+<li>Snapshot: Create a Snapshot before CFN deletes</li>
+<li>Delete(Default)<ul>
+<li>RDS:DBCluster resources default policy is Snapshot</li>
+<li>Delete an s3 bucket you need to first empty the bucket of its content</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CloudFormer: generate CFN from existing resources</li>
+</ul>
+<h3 id="OpsWorks"><a href="#OpsWorks" class="headerlink" title="OpsWorks"></a>OpsWorks</h3><ul>
+<li>For chef/puppet stacks only</li>
+<li>Can manage ELB and EC2 instances</li>
+<li>Cannot manage an ASG</li>
+</ul>
+<h3 id="System-Manager"><a href="#System-Manager" class="headerlink" title="System Manager"></a>System Manager</h3><ul>
+<li>SSM Patch Manager:<ul>
+<li>Define a patch baseline</li>
+<li>Define patch group</li>
+<li>Define Maintenance Windows</li>
+<li>Add the AWS-RunPatchBaseline Run Command - works for Linux and Windows</li>
+<li>Define Rate Control</li>
+<li>Monitor Patch Compliance using SSM Inventory</li>
+</ul>
+</li>
+</ul>
+<h2 id="Cost-Control"><a href="#Cost-Control" class="headerlink" title="Cost Control"></a>Cost Control</h2><h3 id="Trusted-Advisor"><a href="#Trusted-Advisor" class="headerlink" title="Trusted Advisor"></a>Trusted Advisor</h3><ul>
+<li>Can check if an S3 bucket is made to public<ul>
+<li>but cannot check for S3 objects that are public inside of your bucket</li>
+<li>Use CloudWatch Events/S3 Events instead</li>
+</ul>
+</li>
+<li>Service Limits<ul>
+<li>Limits can only be monitored in Trusted Advisor (cannot be changed)</li>
+<li>Cases have to be created manually in AWS Support Centre to increase limits</li>
+</ul>
+</li>
+</ul>
+<h3 id="EC2-Instance-Launch-Types"><a href="#EC2-Instance-Launch-Types" class="headerlink" title="EC2 Instance Launch Types"></a>EC2 Instance Launch Types</h3><ul>
+<li>On Demand</li>
+<li>Spot Instances</li>
+<li>Reserved (MINIMUM 1 year)</li>
+<li>Dedicated Instances: no other customers will share your hardware</li>
+<li>Dedicated Hosts: book an entire physical server, control instance placement<ul>
+<li>Great for software licenses that operate at the core, or socket level</li>
+<li>Can define host affinity so that instance reboots are kept on the same host</li>
+</ul>
+</li>
+</ul>
+<h2 id="Migration"><a href="#Migration" class="headerlink" title="Migration"></a>Migration</h2><h3 id="Storage-Gateway"><a href="#Storage-Gateway" class="headerlink" title="Storage Gateway"></a>Storage Gateway</h3><ul>
+<li>Bridge between on-premise data and cloud data in S3</li>
+<li>File Gateway<ul>
+<li>appliance is a virtual machine to bridge between your NFS and S3</li>
+<li>configured S3 buckets are accessible using the NFS and SMB protocol</li>
+<li>Most recently used data is cached in the file gateway</li>
+<li>Can be mounted on many servers</li>
+</ul>
+</li>
+<li>Volume Gateway<ul>
+<li>Block storage using iSCSI protocol backed by S3</li>
+<li>Cached volumes: low latency access to most recent data, full data on S3</li>
+<li>Stored volumes: entire dataset in on premise, scheduled backups to S3</li>
+<li>Can create EBS snapshots from the volumes and restore as EBS</li>
+</ul>
+</li>
+<li>Tape Gateway<ul>
+<li>You can’t access single file within tapes, the entire tape need to be restored</li>
+</ul>
+</li>
+</ul>
+<h2 id="VPC"><a href="#VPC" class="headerlink" title="VPC"></a>VPC</h2><h3 id="VPC-Peering"><a href="#VPC-Peering" class="headerlink" title="VPC Peering"></a>VPC Peering</h3><ul>
+<li>Overlapping CIDR for IPv4 is not allowed</li>
+<li>No Transitive VPC Peering</li>
+<li>No Edge to Edge Routing</li>
+</ul>
+<h3 id="VPC-Endpoint-Gateway"><a href="#VPC-Endpoint-Gateway" class="headerlink" title="VPC Endpoint Gateway"></a>VPC Endpoint Gateway</h3><ul>
+<li>Only works for S3 and DynamoDB, must create one gateway per VPC</li>
+<li>Must update route table entries</li>
+<li>Gateway is defined at the VPC level</li>
+<li>DNS resolution must be enabled in the VPC</li>
+</ul>
+<h3 id="VPC-Endpoint-Interface"><a href="#VPC-Endpoint-Interface" class="headerlink" title="VPC Endpoint Interface"></a>VPC Endpoint Interface</h3><ul>
+<li>Provision an ENI that will have a private endpoint interface hostname</li>
+<li>Leverage Security Groups for security</li>
+<li>Private DNS</li>
+<li>Interface can be accessed from Direct Connect and Site-to-Site VPN</li>
+</ul>
+<h3 id="VPC-Endpoint-Services-PrivateLink"><a href="#VPC-Endpoint-Services-PrivateLink" class="headerlink" title="VPC Endpoint Services (PrivateLink)"></a>VPC Endpoint Services (PrivateLink)</h3><ul>
+<li>ENI with NLB, which can be used to connect VPC outside of the account</li>
+</ul>
+<h3 id="Site-to-Site-VPN"><a href="#Site-to-Site-VPN" class="headerlink" title="Site to Site VPN"></a>Site to Site VPN</h3><ul>
+<li>On-premise:<ul>
+<li>Setup a software or hardware VPN appliance to your on-premise network</li>
+<li>The on-premise VPN should be accessible using a public IP</li>
+</ul>
+</li>
+<li>AWS:<ul>
+<li>Setup a <strong>Virtual Private Gateway</strong> and attach to your VPC</li>
+<li>Setup a Customer Gateway to point the on-premise VPN appliance</li>
+</ul>
+</li>
+<li>Two VPN connections are created for redundancy, encrypted using IPSec</li>
+</ul>
+<h3 id="AWS-VPN-CloudHub"><a href="#AWS-VPN-CloudHub" class="headerlink" title="AWS VPN CloudHub"></a>AWS VPN CloudHub</h3><ul>
+<li>Can connect up to 10 Customer Gateway for each Virtual Private Gateway</li>
+<li>Low cost hub-and-spoke model for primary or secondary network connectivity between locations</li>
+<li>Provide secure communication between sites</li>
+<li>It’s a VPN connection so it goes over the public internet</li>
+<li>Can be a failover connection between your on-premise locations</li>
+</ul>
+<h3 id="Direct-Connect"><a href="#Direct-Connect" class="headerlink" title="Direct Connect"></a>Direct Connect</h3><ul>
+<li>Not something can be done immediately</li>
+<li>Provides a dedicate private connection from a remote network to the VPC</li>
+<li>Dedicated connection must be setup between your DC and AWS Direct Connect locations</li>
+<li>More expensive than running a VPN solution</li>
+<li>Bypass ISP, reduce network cost, increate bandwidth and stability</li>
+<li>Not redundant by default (must setup a failover DX or VPN)</li>
+<li>Data in transit is not encrypted but is private</li>
+</ul>
+<h3 id="Direct-Connect-VIF"><a href="#Direct-Connect-VIF" class="headerlink" title="Direct Connect VIF"></a>Direct Connect VIF</h3><ul>
+<li>VIF = Virtual Interface</li>
+<li>Public VIF: Connect to Public AWS Endpoints</li>
+<li>Private VIF: TO connect to resources in your VPC</li>
+<li>VPC endpoints cannot be accessed through Private VIF</li>
+</ul>
+<h3 id="Direct-Connect-Gateways"><a href="#Direct-Connect-Gateways" class="headerlink" title="Direct Connect Gateways"></a>Direct Connect Gateways</h3><ul>
+<li>Direct Connect to one or more VPC in many different regions must use a Direct Connect Gateway</li>
+</ul>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
+        </div>
+    </div>
+</article>
+
+    <!-- Footer -->
+    <hr />
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                    
+
+                    
+
+                    
+                        <li>
+                            <a href="https://github.com/eziceice" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                        <li>
+                            <a href="https://www.linkedin.com/in/yutian-li-8070b9102/" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                        <li>
+                            <a href="mailto:liyutian6@gmail.com" target="_blank">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    
+
+                    
+                </ul>
+                <p class="copyright text-muted">&copy; 2021 Yutian Li<br></p>
+                <p class="copyright text-muted">Original Theme <a target="_blank" href="http://startbootstrap.com/template-overviews/clean-blog/">Clean Blog</a> from <a href="http://startbootstrap.com/" target="_blank">Start Bootstrap</a></p>
+                <p class="copyright text-muted">Adapted for <a target="_blank" href="https://hexo.io/">Hexo</a> by <a href="http://www.codeblocq.com/" target="_blank">Jonathan Klughertz</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- After footer scripts -->
+    
+<!-- jQuery -->
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<!-- Gallery -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/featherlight/1.3.5/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Disqus Comments -->
+
+
+
+</body>
+
+</html>
