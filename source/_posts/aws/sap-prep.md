@@ -1,5 +1,5 @@
 ---
-title: AWS Solution Architect Professional
+title: Solution Architect Professional - AWS
 date: 2021-08-17 12:00:52
 tags: aws
 categories:
