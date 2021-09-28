@@ -5,9 +5,6 @@ tags: aws
 categories:
 - cloud
 ---
-
-# AWS SAP Exam Prepare
-
 ## Identity & Federation
 
 ### IAM
