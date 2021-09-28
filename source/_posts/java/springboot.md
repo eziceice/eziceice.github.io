@@ -1,0 +1,682 @@
+---
+title: SpringBoot
+date: 2019-04-30 12:06:28
+tags: java
+categories:
+- web framework
+---
+# 1. Annotation in Spring IOC
+
+## *Life cycle of Spring bean*
+
+Spring bean的生命周期大致分为Bean的定义，Bean 的初始化，Bean的生存期和Bean的销毁四个部分。
+### Bean Definition
+- Spring通过@ComponentScan找到带有@Component的类，这是一个资源定位的过程。
+-  一旦找到了这个资源，就开始解析，并将definition的信息保存起来。注意此时并没有对bean进行初始化，也没有实例，仅仅是定义。
+- 然后把bean发布到Spring IOC容器中，依然只有定义无实例。
+- 默认情况下Spring会继续完成Bean的实例化和依赖注入，我们也可以通过@ComponentScan里的lazyInit（Default=False）来只在使用bean时对bean进行初始化和依赖注入。
+- 实现BeanPostProcessor接口将会对所有的Bean的初始化产生影响。
+- 如果单独对一个Bean实现一些接口（BeanFactoryAware，AplicationContextAware..）将只会对单独的Bean初始化有影响。
+
+### Conditional
+
+- 使用@Conditional注解同时实现Condition接口可以对环境信息进行检查，如果出错则不装配。
+
+### Bean的作用域
+
+- isSingleton表明bean在ioc容器中以单例存在（default）。
+- isPrototype表明每次获取bean，ioc容器都会创建一个新的bean。
+  以上两种可以在spring 中使用@Scope（ConfigurableBeanFactory.SCOPE_PROTOTYPE）控制。
+  在Spring MVC中，还可以通过WebApplicationContext去定义其他作用域，比如请求（SCOPE_REQUEST）和会话（SCOPE_SESSION），请求就是一个请求中只会有一个类，会话就是一个会话中只有一个类。
+
+### Profile
+
+使用@Profile，并且使用环境命令-Dspring.profiles.active=dev可以随意切换配置环境。
+
+### 引入XML配置Bean
+
+使用@ImportSource就可以将定义好bean的xml装配到ioc容器中
+### Spring EL
+
+- ${.....}代表占位符，他会读取上下文的属性值装配到属性中。
+- #{.....}代表启用Spring表达式，它将具有运算的功能；T(.....)代表引入类，Java默认的包可以只写包名，其他包必须用全名。beanName是Spring IOC容器的Bean的名称。
+
+# 2. Spring AOP
+
+## *How AOP works in Spring*
+
+AOP: Aspect oriented programming (面向切面编程)
+### 约定编程
+
+- Spring的核心即是Proxy动态代理技术，一个拦截器通过拦截一个bean的方法，可以对bean方法前后进行一系列操作。
+- proxy先调用before方法；如果useAround方法返回true，则调用拦截器的round方法，而不调用target的方法，但是invocation的对象存在一个proceed 方法可以调用target的方法；无论怎样执行完都会调用拦截器的after方法；发生异常执行afterThrowing方法，无异常执行afterReturning。
+- proxy的主要作用就是将服务类和拦截器织入到对应的流程中去。
+- 一个proxy它会有三个参数：通常proxyInstance需要实现InvocationHandler接口
+  - classloader 类加载器
+  - interfaces 绑定的接口，也就是把代理对象绑定到那些接口下，可以是多个接口
+  - invocatiHandler 绑定代理对象逻辑实现 - 需要实现invoke方法
+
+### AOP的概念
+
+- 使用@AspectJ注解的方式可以在Springboot中开启AOP。
+- 如果使用JDBC进行数据库连接，需要处理连接数据库，提交事务，如果发生异常则需要回滚操作，并且最后还需要释放数据库连接资源。而使用Spring AOP则只需要关注提交事务的逻辑，使用@Transactional注解Spring可以自动对其他的事件进行处理。这样首先可以摆脱try catch，减少大量冗余代码，其次就是使项目变得更加容易维护。
+- AOP的术语和流程
+  - join point：对应的是具体被拦截的对象，因为spring只能支持方法拦截，所以被拦截的对象通常都是特定的方法。
+  - point cut：有时候切面不仅仅用于单个方法，也可能是多个类的不同的方法，这时，可以通过正则和指示器的规则去定义，从而适配连接点。
+  - advice：按照约定的流程下的方法，分为before advice， after advice， around advice， afterReturnning advice和afterThrowing advice。
+  - target：被代理的对象。
+  - introduction：引入新的类和方法，增强现有bean的功能。
+  - weaving：它是一个通过动态代理技术，为原有的服务对象生成代理对象，然后将与切点定义匹配的连接点拦截，并按约定将各类通知织入约定流程的过程。
+  - aspect：是一个可以定义切点，各类通知和引入的内容，Spring AOP将通过它的信息来增强bean的功能或者将对应的方法织入流程中。
+
+### AOP开发详解
+
+- @Aspect开启切面声明。
+- @Pointcut定义切点。execution(* com.springboot.service.UserSerivceImpl.printUser(..))
+  - execution表示执行，拦截里面的正则匹配的方法。
+  - * 表示任意返回类型。
+  - com.springboot.service.UserServiceImpl表示目标对象全名
+  - printUser表示目标对象方法
+  - (..)表示任意参数
+
+- @Around是环绕通知，为所有通知中最强大的，可以直接去修改原目标对象的服务逻辑，当然通过调用proceed方法也可以调用原目标对象的服务逻辑。
+- @DeclareParents可以增强原类连接点的功能。@DeclareParents(value = "com.springboot.service.UserServiceImpl+", defaultImpl = UserValidatorImpl.class)。该功能是将两个类的接口挂在proxy的获取目标的接口的方法中，因此proxy可以在多个接口中互相转换。它有两个必须的属性配置：
+  - value：指向你要增强功能的目标对象，这里要增强的是UserServiceImpl对象。
+  - defaultImpl：引入增强的功能类。
+- 通过使用args和Joint point，可以获取目标对象的传入参数。@Before("pointcut() && args(user)") - JoinPoint point - points.getArgs(); 环绕通知则使用ProceedingJoinPoint。
+- 对于使用JDK来说，它是要求被代理的目标对象必须拥有接口，而对于CGLIB则不作要求。因此在默认情况下如果目标对象拥有接口，Spring将使用JDK进行动态代理运行，否则将使用CGLIB。
+- Spring也可以定义多个切面，通过使用@Order或者实现Ordered接口，可以控制切面的执行顺序。注意：对于前置通知，顺序为从小到大。而对于后置和返回通知，执行顺序为从大到小，这是一个典型的责任链模式的顺序。
+
+# 3. Spring with Database
+
+## *How to work with Database in Spring*
+Spring中主流方式是使用Mybatis和Hibernate，目前来看Hibernate全映射框架在互联网时代高性能的要求下逐渐被淘汰，Mybatis逐渐成为主流，Spring的JDBC Template则并不经常使用。
+### JDBC Template
+
+- 对于jdbcTempalte的映射关系需要开发者自己实现RowMapper的接口，这样就可以完成数据库和POJO对象的映射。
+- 如果想一次执行多个query并且只占用一条数据库连接资源，需要使用StatementCallback或者ConnectionCallback接口实现回调。若使用两行代码则会分配两条数据库连接资源，这种方式是不推荐的。
+
+### Spring JPA (Hibernate)
+- JPA维护的核心是实体(Entity Bean)，而它是通过一个持久化上下文(Persistence Context)来使用的。Persistence Context包含三个部分：
+  - ORM： 对象关系映射。通过注解的方式将Database里的Object和Java中的bean进行Mapping。
+  - 实体操作API：通过继承JpaRepository, 可以实现一些基本的数据库查询。（包括基本查询和模糊查询，都不需要进行实现，Spring对此进行了内部实现，直接继承接口即可）
+  - 查询语言：通过使用@Query的注解可以实现灵活的查询。
+
+### MyBatis
+
+MyBatis支持定制化SQL，存储过程以及高级映射的优秀持久层框架。
+- MyBatis是一个基于SqlSessionFactory构建的框架，对于SqlSessionFactory而言，它的作用是生成SqlSession接口对象，这个对象是MyBatis操作的核心。在MyBatis的生命周期中，只有一个单例模式的SqlSessionFactory对象存在。
+  - settings: 自定义Mybatis的各种settings，包括映射规则，缓存之类的。
+  - typeAlias：类名识别。
+  - typeHandlers：对于枚举类型需要定义typeHandler来实现POJO和数据库类型的转换。
+  - plugins：拦截器，实现动态代理和责任链。
+  - mappers：SQL和POJO的映射。
+- 在Springboot中通过使用注解的方式@MapperScan可以将定义的Repositoy注入到Spring的IOC容器中，这是一种比较优雅的方式，只需要在注解中定义需要扫描的包和sqlSessionFacotry即可。注意，注解中有一个属性为sqlSessionFactory和sqlSessionTemplateRef, 后者的优先级高于前者，如果后者定义了则前者被忽略。
+
+# 4. Spring with Transaction
+
+## *Manage Transaction*
+在高并发的场景下，数据库事务便显得尤其重要，尤其是涉及到金钱的情况下，更是不允许出错的。Springboot通过各种注解来支持数据库事务的操作。在Spring的数据库事务中可以使用编程式事务，也可以使用声明式事务，现在在绝大部分的情况下都是使用声明式事务。
+### Spring声明式事务的使用
+
+- 通过对于AOP的使用，我们可以将自己的开发业务代码织入到AOP中，来对大量的try catch finally等冗余代码进行擦除。使得开发的代码可读性高维护性好。
+- 使用@Transactional注解将告诉Spring使用数据库事务，该注解可以放在方法上或者放在类上，如果标注在类上则所有的公共非静态方法都将启用事务功能。
+- 无论是否发生异常，Spring最后都会释放事务资源，这样就可以保证数据库连接池正常可用。
+
+### @Transcational配置项
+
+@Transcationnal可以放在接口上也可以放在实现类上，推荐放在实现类上，因为该注解是基于AOP的，如果放在接口上意味着无法使用CGLIB的动态代理。
+- value和transcationManager属性是配置一个Spring的事务管理器，通常Spring会根据使用的持久层的框架来配置对应的事务管理器（Hibernate - HibernateTransactionManager, MyBatis - DataSourceTranscationManager)
+- timeout属性是事务可以允许存在的时间戳，单位是秒
+- readOnly属性定义的是事务是否是只读事务
+- rollbackFor, rollbackForClassName, noRollbackFor, noRollbackForClassName都是指定异常，什么异常情况下提交事务，什么异常情况下回滚事务。
+- propagation是事务的传播级别
+- isolation是事务的隔离级别
+
+### Isolation(事务的隔离级别)
+
+追求更高的隔离级别，它能更好的保持数据的一致性，但是也要付出锁的代价。有了锁，就意味着性能的丢失，而且隔离级别越高，性能就是直线的下降。通常的隔离级别为read commited。不同的数据库对于隔离级别的支持也不一样，Oracle只支持read committed，而MySQL则支持四种。
+
+数据库的ACID
+
+- Atomic：事务全部成功或者全部失败。
+- Consitency：当事务完成时，所有数据必须保持一致状态。
+- Isolation：通过对事务进行不同的隔离等级来压制更新丢失。
+- Durability：事务完成后，所有数据会固化到一个地方，即使断电重启也不会丢失。
+
+数据库的四个隔离级别：
+
+- read uncommitted: 这是最低的并且最危险的隔离级别，它意味着允许一个事务读取另外一个事务没有提交的数据。在实际开发中用处不高，但是他有着显著的并发能力，适合对数据一致性没有要求而只追求高并发的场景。最大的坏处就是出现了脏读。Level：1
+- read committed：读写提交的隔离级别，是指一个事务只能读取到另一个事务已经提交的数据，不能读取到未提交的数据。Level：2 （Springboot中默认的隔离级别）
+- repeatable read：如果一个数据被事务读取了，后面的事务只能等待该事务完成或者rollback，否则无法读取该数据。这种情况下可能出现幻读现象。Level：4
+- Serializable：串行化是数据库最高的隔离级别，它会保证所有的SQL都按照顺序执行，这样就克服上述隔离级别中的问题。Level：8
+
+### Propagation(事务的传播行为）
+
+传播行为是方法之间调用事务采取的策略问题。在绝大部分的情况下，我们会认为数据库事务要么全部成功，要么全部失败。然而在某些情况下，我们不应该因为极少数的交易不能完成而回滚批量任务调用的其他交易。因此，如果一些交易发生异常，我们只是回滚那些出现异常的交易。
+
+在Spring中，当一个方法调用另外一个方法时，可以让事务采取不同的策略工作，如新建事务或者挂起当前事务。
+常用的Propagation：
+
+- Propagation.REQUIRED：默认的传播行为，如果当前存在事务，就沿用当前事务，否则新建一个事务运行子方法。
+- Propagation.REQUIRES_NEW：无论当前事务是否存在，都会创建新的事务运行方法，这样新的事务就可以拥有新的锁和隔离级别等特性，与当前事务互相独立。
+- Propagation.NESTED：在当前方法调用子方法是，如果子方法发生异常，只回滚子方法的SQL，而不回滚当前方法的事务。
+
+NESTED：
+当数据库支持保存点技术时（save point）， 就启用保存点技术；如果不能支持，就新建一个事务去运行代码，等价于REQUIRES_NEW。NESTED的传播行为和REQUIRES_NEW还是有区别的。NESTED的传播行为会沿用当前事务的隔离级别和锁等特性，而REQUIRES_NEW则可以拥有自己独立的隔离级别和锁等特性。
+
+**@Transcationalt一定不可以使用在自调用，此时会失效（同一个类中的方法直接调用）。因为Spring数据库事务实现的原理是AOP，AOP的原理为动态代理，如果调用过程中是类本身的调用而不是代理对象的调用，则就不会有AOP，则Spring就不能把你的代码织入到约定的流程中。**
+
+# 5. Spring and Redis
+
+## *Spring and Redis*
+NoSQL现在已经广泛应用，在互联网中起到加速系统的作用。其中有两种NoSQL使用最为广泛，那就是Redis和MongoDB。
+
+Redis是一种运行在内存中的数据，支持7种数据类型的存储。由于其是基于内存的，因此运行速度很快，大约是关系数据库的几倍到几十倍的速度，所以开发中我们会将常用的数据存储到Redis中。
+### Spring-Jedis (Spring中Redis的驱动)
+
+- 在Java中有多种与Redis连接的驱动，目前应用比较广泛的是Jedis。通过使用Jedis，Spring就会提供RedisConnection接口的实现类JedisConnection去封装原有的Jedis对象。
+- 为了进一步简化开发，Spring同时也提供了RedisTemplate。使用RedisTemplate它会自动从RedisConnectionFactory工厂获取连接，然后执行对应的Redis命令，在最后还会关闭Redis的连接。
+- Redis是一种基于字符串存储的NoSQL，而Java是基于对象的语言，对象是无法存储到Redis中的，不过Java提供了序列化机制，只要类实现了Serializable接口，就代表类的对象能够进行序列化，通过将类对象进行序列化就能够得到二进制字符串，这样Redis就可以将这些类对象以字符串进行存储。JdkSeriaizationRedisSerializer是RedisTemplate的默认的序列化器。
+- 通常使用Redis一般的接口时，每一条语句将会获取一条Redis连接并且执行一条Redis命令，这样显然是对资源的浪费。此时应该使用SessionCallback接口或者RedisCallback接口，它的作用是让RedisTemplate进行回调，通过它们可以在同一条连接下执行多个Redis命令。
+- 在大部分场景下，并不需要很复杂的操作Redis，而是仅仅需要很简单的使用，也就是使用RedisTemplate操作一次Redis。如果需要多次执行则使用SessionCallback或者RedisCallback。
+- 在Redis列表是一种链表结构，这就意味着查询性能不高，而增删节点的性能高，这是它的特性。Redis中存在从左到右或者从右到左的操作。
+
+### Redis Transcation
+在高并发的场景中，往往我们需要保证数据的一致性，这时考虑使用Redis事务或者利用Redis执行Lua的原子性来达到数据一致性的目的。
+
+- 在Redis中使用事务的命令组合是watch...multi...exec搭配SessionCallback来使用。
+- **watch**命令是可以监控Redis的一些key;
+- **multi**命令是开始事务，开始事务后，该客户端的命令不会被马上执行，而是存放在一个队列里。**注意，如果此时执行一些返回数据的命令，Redis也不会马上执行的，所以此时调用返回数据的命令结果将为空。**
+- **exec**命令的意义在于执行事务，只是它在队列命令执行前会判断被watch监控的Redis的key的数据是否发生过变化（即使赋予与之前相同的值也会被认为变化过），如果它认为发生了变化，那么Redis将取消事务，否则就执行事务。
+- Redis在执行事务时，要么全部执行，要么全部不执行，而且不会被其他客户端打断，这就保证了Redis事务下数据的一致性。
+- 如果在Redis的事务队列中发生了错误，Redis只是会报出错误，而错误队列后面的命令依旧会被执行。这是Redis事务的特点，也是使用Redis事务需要特别注意的地方。
+
+### Redis Pipline
+
+在默认的情况下，Redis客户端是一条条命令发送给Redis服务器的，这样显然性能不太高。在关系数据库中我们可以使用批量，也就是只有需要执行SQL时，才一次性发送所有的SQL去执行，这样性能就高了很多。通常网络1传输速度的瓶颈会造成Redis性能不佳，然而使用pipline后就可以大幅度的在需要执行很多命令时提升Redis的性能。
+
+- 与事务一样，使用pipline的过程中，所有的命令也只是进入队列而没有执行，所以执行的命令返回值也为空，这是需要注意的地方。
+
+### Redis Subscription
+
+发布订阅是message的一种常用的模式。通过多个监听器对渠道进行监听(Queue/Topic)，来接受渠道内的消息。
+
+### Redis Lua Script
+
+在Redis中使用Lua脚本可以提高Redis的计算能力，而且还具备原子性，所以在需要保证数据一致性的高并发环境中，我们也可以使用Redis的Lua脚本来保证数据的一致性。
+
+在Redis中有两种运行Lua脚本的方法：
+- 一种是直接发送Lua到Redis服务器去执行。
+- 一种是先把Lua发送给Redis，Redis会对Lua脚本进行缓存，然后返回一个SHA1的32位编码，之后则只需要发送SHA1的编码和相关参数给Redis便可执行。
+
+如果Lua脚本比较长，那么就需要通过网络传递脚本给Redis执行，而现实的情况是网络的传递速度往往跟不上Redis的执行速度，所以网络就成为了Redis执行的瓶颈。如果只是传递32位编码和参数，那么需要传递的消息就少了许多，这样可以极大的减少网络传输的内容，提升性能。
+
+### Redis Spring Annotation
+
+- @CachePut 表示将方法结果返回存放在缓存中
+- @Cacheable 表示现存缓存中通过定义查询key，如果可以查到数据，则返回，否则执行该方法，返回数据，并且将返回的结果保存到缓存中。
+- @CacheEvict 通过定义的key移除缓存，它有一个boolean类型的配置项beforeInvocation，表示在方法之前或者之后移除缓存，默认值为false，表示在方法之后移除缓存。
+- 更新数据时应该谨慎一些，尽量避免读取缓存数据，因为缓存数据存在脏读的可能。
+- 对于命中率很低的场景，使用缓存并不能有效的提升系统性能，同时对于大量消耗资源的数据，使用缓存也需要谨慎。
+- 一般而言，我们需要规定一个时间让缓存失效，在Redis中也可以设置超时时间，当缓存超过超时时间后，则应用不再能够从缓存中获取数据，而只能从数据库重新获取最新的数据，以保证数据失真不会太离谱。对于那些实时性要求比较高的数据，我们可以把缓存时间设置的更少一些，这样会更加频繁的刷新缓存，而不利的是会增加数据库的压力。
+- 对于数据库的写操作，往往采取的策略就完全不一样，需要我们谨慎一些，一般会认为缓存不可信，所以会考虑从数据库中先读取最新的数据，然后再更新数据，以避免将缓存的脏数据写入数据库导致出现业务问题。
+- 当需要很多的自定义缓存配置时，通常建议使用代码的方式进行自定义而不是在application.properties中进行配置。
+
+
+# 6. Spring and MongoDB
+
+## *MongoDB*
+
+由于Redis的计算能力十分有限，MongoDB此时就派上用场了。对于那些需要统计，按条件查询和分析的数据，它提供了支持，它可以说是一个最接近关系数据库的SQL。
+
+MongoDB的目的是为Web应用提供可扩展的高性能数据存储解决方案。
+
+### MongoDB Template
+
+- 在Spring中通过使用MongoDB Template可以很轻松的对MongoDB进行数据操作。通常使用`Criteria`定义条件，使用`Query`构建数据库语句，然后使用`template`执行语句实现结果。
+- save方法如果id存在，则执行更行，否则执行插入。
+- delete方法返回删除文档的数量。
+- update方法返回匹配的文档数，更新的文档数和如果存在更新而插入文档的情况返回插入文档的信息。
+-
+### MongoDB JPA + Template
+- MongoDB JPA的使用方法和Hibernate JPA的使用方法基本类似，通过继承JPA Repository接口来获取predefined各种方法。
+- 如果想使用自定义查询，可以通过使用@Query
+- 或者通过定义一个XXXRepositoryImpl类来实现需要自定义的方法(**该类并不需要继承XXXRepository，Spring会对其进行自动装载然后使用其中的方法**)。
+
+# 7. Spring MVC
+
+## *Spring MVC*
+
+Spring MVC是一个较为松散的组合，展示给用户的视图（View），控制器返回的数据模型（Model），定位试图的解析器（ViewResolver）和处理适配器（HandlerAdapter）等内容都是独立的。
+
+### Spring MVC的框架原理
+
+- 处理请求先到达Controller，Controller的主要作用是请求分发，这样它根据请求的内容去访问Model，Model通常分为Service和DAO，来解决relational
+  database和cache的数据获取，当Controller获取到Model后再将Model送至View进行render，展现给用户。
+  **框架原理**：
+  ![Spring MVC框架原理][2]
+
+### Spring MVC的流程
+
+- 流程和组件是Spring MVC的核心，Spring MVC的流程是围绕着DispatcherServelt而工作的，这是Spring MVC中最重要的内容。
+  **流程**：
+  ![Spring MVC流程][1]
+- Spring MVC处理请求并非一定经过全流程，有时侯比如发送JSON数据给前端则渲染过程不需要存在。
+- 这些组件的初始化都是在spring-webmvc-xxx.jar中的属性文件DispatcherServlet.properties中配置的，定义的对象都是在Spring MVC开始时就初始化，并且放在Spring IOC的容器中。
+- **@Controller和@RequestMapping在Web服务器启动Spring MVC时，被扫描到HandlerMapping的机制中存储，之后在用户发起请求被DIspatcherServlet拦截后，通过URI和其他的条件，通过HandlerMapper机制就能找到对应的Controller的方法进行响应。**
+- **通过HandlerMapping返回的是一个HandlerExecutionChain的对象，这个对象包含一个handler，这个是对controller的包装，因为controller中可能存在参数，那么handler就可以读入http和上下文相关参数，然后再传给controller。而在controller执行完成返回后，handler又可以通过配置信息对controller返回的结果进行处理。**
+ ```
+public class HandlerExecutionChain {
+	private static final Log logger = LogFactory.getLog(HandlerExecutionChain.class);
+	private final Object handler; //处理器
+	@Nullable
+	private HandlerInterceptor[] interceptors;
+	@Nullable
+	private List<HandlerInterceptor> interceptorList; //拦截器
+	private int interceptorIndex = -1;
+	...
+```
+- **有了Handler还需要去运行，但是这里面有普通的http request，有bean request，还有WebSocket request，所以还需要一个Adapter去运行HandlerExecutionChain对象包含的handler，这就是HandlerAdapter接口定义的实现类。**
+- Spring MVC用于处理视图最重要的两个接口是ViewResolver和View。**ViewResolver的主要作用是把一个逻辑上的视图名称解析为一个真正的视图**，Spring MVC中用于把View对象呈现给客户端的是View对象本身，而ViewResolver只是把逻辑视图名称解析为对象的View对象。**View接口的主要作用是用于处理视图，然后返回给客户端**。
+- ViewResolver就是拿到三个参数：request，response，ModelAndView， 生成一个View对象的实例。而后DispatcherServlet就可以调用 View.render()了。
+
+### 定制Spring MVC Initialization
+
+- Spring提供了接口WebMvcConfigurer，只需要implement这个接口便可以进行定制。Springboot是通过配置类WebMvcAutoConfiguration定义的，它有一个内部的类WebMvcAutoConfigurationAdapter，通过它Springboot就自动配置了Spring MVC的初始化。
+
+
+# 8. 深入Spring MVC
+
+## *深入Spring MVC开发*
+
+### 处理器映射
+
+**HandlerMapping的主要任务就是将请求定位到具体的Handler上。**
+- 在Spring MVC启动阶段，就会将注解@RequestMapping所配置的内容保存到HandlerMapping机制中去，然后等待请求的到来，通过拦截请求信息与HandlerMapping进行匹配，找到对应的handler(includes controller)，并将handler以及interceptor保存到HandlerExecutionChain对象中，返回给DispatcherServlet，这样DispatcherServlet就可以运行它们。
+- RequestMapping可配置项，通过value或者path来设置请求URL，从而让对应的请求mapping到controller method中，并且可以通过其他配置缩小请求mapping的范围。
+  - headers: 限定header存在对应的参数时才响应
+  - consumes: 限定HTTP body提交类型
+  - produces: 限定返回的内容类型，仅当HTTP header中(Accept)包含制定类型才返回
+  ![RequestMapping][3]
+
+### 获取Controller Parameter
+
+- Spring MVC在没有Annotation的情况下也可以获取参数，唯一的要求是参数名称和HTTP Request请求的参数名称保持一致。
+- 使用@RequestParam便可以自定义参数名称，默认情况下不能为空，可以通过设置required属性进行转变。
+- 在REST风格中，参数往往通过URL进行传递，此时便可以使用@PathVariable。
+- @DateTimeFormat和@NumberFormat可以对日期以及数字进行格式化。
+
+### 自定义参数转换规则
+
+- 当一个request到来的时候，handler开始工作，先从http request和上下文环境中获取参数。如果是简单的参数，Spring MVC已经提供了部分converter可以直接转换。如果是http request body，则调用HttpMessageConverter接口的方法对request body进行转换，首先它会判断能否对请求体进行转换，如果可以就会将其转换为对应的Java Object。
+  ![HttpMessageConverter][4]
+- canRead方法来判断body是否可读，如果可读，则执行read方法。
+- 在read过程中，WebDataBinder将会被调用，通过三种接口Converter, Formatter, GenericConverter进行对应的数据类型转换，并提供验证功能。
+  如果没有出现任何问题，则调用controller并将其所需要的参数传过去。
+  ![HTTPMessageConverter][5]
+- **Converter**：普通格式转换器，将HTTP里字符串转换成对应的Java类型
+- **Formatter**：格式化转换器，用来转换Date或者特殊的Number
+- **GenericConverter**：将HTTP parameters convert to arrays.
+- 在SpringBoot初始化时，会遍历所有的自定义的转换器并且注册到DefaultFormattingConversionService对象中，这样使用的时候就会自动进行转换。
+
+### Validation
+Spring MVC支持JSR-303验证规范，在默认情况下SpringBoot会引入关于Hibernate Validator机制来支持JSR-303验证规范。
+
+- 灵活的使用WebDataBinder，不仅可以注册自定义的转换器，还可以注册自定义的Validator。通过使用@InitBinder在controller中，允许在进入controller的方法之前修改WebDataBinder的机制，将自定义的WebDataBinder对象传进去。Spring MVC在遍历对应的Validator时，当遍历到自定义的Validator就会去执行它的supports方法。
+
+### ModelAndView
+Controller是业务逻辑核心内容，而控制器的核心内容之一就是对数据的处理。
+
+- Spring MVC数据模型图：
+  ![Model and View][6]
+  其中ModelMap继承自LinkedHashMap，因此具备Map接口的一切特性。
+
+### ViewResolver和View
+View是render数据模型展示给用户的组件，在Spring MVC中又分为logical view和physical view。Logical view需要ViewResolver进行进一步的定位解析。Physical view只需要将数据模型直接渲染出来。
+
+- View Interface:
+  ![View][7]
+  getContentType是获取HTTP响应类型的，它可以返回Text, JSON or File。render则是将数据模型渲染到视图的，这是视图的核心方法。
+- 对于logical view，view resolvers会去定位对应的jsp文件，找到它并且将数据模型传入。View便会对model进行render。
+
+### File Upload
+
+- 首先，DispatcherServlet会使用adapter模式，将HttpServletRequest接口对象转换为MultipartHttpServletRequest对象。MultipartHttpServletRequest接口扩展了HttpServletRequest接口的所有方法。
+- 对于MultipartHttpServletRequest的配置，是通过MutipartResolver接口实现的。该接口有两个实现类，现在最常用的是StandardServletMutipartResolver(默认情况下SpringBoot的选择)。
+- 推荐使用Servlet的Part类进行文件上传。
+
+### Interceptor
+在HandlerExecutionChain对象中包含handler和Interceptor。其中Interceptor可以增强handler的功能。
+![Interceptor flow][8]
+
+- **Interceptor的流程如下：**
+    - 执行preHandle，该方法返回一个boolean。如果是false，结束所有流程；true执行下一步。
+    - 执行handler，包含controller。
+    - 执行postHandle。
+    - 执行ViewResolver和View Render。
+    - 执行afterCompletion。
+- 多个拦截器的执行顺序是chain pattern的规则，因为request和response都需要拦截，对于handler之前的方法采用先注册先执行，而handler之后的方法则是先注册后执行。
+- **AfterCompletion无论如何都会被执行，除非Exception发生在preHandle**。
+- **如果controller中发生exception，那么postHandle将无法被执行**。
+
+### Spring MVC拾遗
+
+#### *@ResponseBody to JSON*
+- 当遇到标注的@ResponseBody后，handler就会记录这个方法的response类型为JSON。当执行完controller返回以后，handler就会启用ResultResolver去解析这个结果，它会去loop注册给Spring MVC的HttpMessageConverter接口的实现类。由于MappingJackson2HttpMessageConverter这个实现类已经被Spring MVC所注册，所以匹配上了，handler就会把结果变为JSON。如果转换成功，后续ModelAndView就返回null，这样ViewResolver和View render就不会被执行了。![ResponseBodyToJSON][9]
+
+#### *Redirect*
+- Spring MVC也支持Redirect的需求，就是通过各种方法将request定位到其他位置。可以通过“Redirect:"开头的字符串，同时也可以通过使用RedirectAttributes传递已有的对象给新的方法。在RedirectAttriubtes中通过使用addFlashAttriubte方法保存参数，在controller执行完成以后，会被保存在session对象中。当执行redirect时，在进入redirect之前首先把session中的参数取出，用来填充重定向的方法的参数和数据模型，之后删除session中的数据，然后调用redirect方法，并且将对象传递给redirect方法。
+
+#### *HttpSession*
+- 有两个注解用来操作HttpSession对象：
+  - @SessionAttribute：应用于参数，它的作用是将HttpSession中的属性读出，赋予controller参数。
+  - @SessionAttributes：类的注解，它会将相关的数据模型保存在Session中。
+
+#### *Controller Advice*
+可以通过给Spring MVC的controller增加通知，增强controller的功能，可以在controller方法的前后和异常发生时执行不同的处理。
+- @ControllerAdvice：定义一个controller的advice类，允许定义一些关于增强controller的各类advice和限定增强那些controller的功能等。
+- @InitBinder：定义Controller的参数绑定规则，如converter和formatter，它会在进入controller（参数转换之前）进行。
+- @ExceptionHandler：定义controller发生异常后的行为。
+- @ModelAttribute：可以在controller方法执行之前，对数据模型进行操作。
+
+#### *Parameter in request header*
+
+- Use @RequestHeader可以获取header的参数。
+
+# 9. 构建REST风格网站
+
+## *REST Web Development*
+在REST风格中，每一个资源都是对应着一个地址，而一个代表资源网址应该是一个名词，而不存在动词，这代表着对一个资源的操作。
+### REST简述
+REST：Representational State Transfer，如果一个architecture符合REST原则，就成它为REST Architecture。
+#### *REST Keyword*
+Resource-Reprensentation-State Transfer
+- Resource：它可以是系统权限用户，角色和菜单等，也可以是一些MediaType比如Text，Image，MP3等，总之就是一个具体存在的对象。每个资源对应一个独特的URI。在REST中，URI也可以称为end point。
+- Representation：如何展示这个资源。常用的JSON/XML。
+- State Transfer：一个资源可以被CRUD。对于HTTP协议，是一个stateless的协议，这就意味着对于Resource的state transfer只发生在Server端。
+
+- **服务器存在着一系列的资源，每一个资源通过单独唯一的URI标识**。
+- **Client和Server之间可以相互传递资源，而资源会以某种表现层得以展示**。
+- **Client通过HTTP协议所定义的Action对资源进行操作，以实现资源的状态转换**。
+
+#### *HTTP Method*
+
+- GET：访问资源。
+  - GET /user/{id}
+  - GET /users/{userName}/{note} 可以使用@RequestBody
+- POST：创建资源。
+  - POST /user/{userName}/{sex}/{note} 可以使用@RequestBody
+- PUT：更新资源。
+  - PUT /user/{id}/{userName}/{sex}/{note} 可以使用@RequestBody
+- PATCH：部分更新资源。
+  - PATCH /user/{id}/{userName}
+- DELETE：删除资源。
+- HEAD：获取资源的Content-Type。
+- OPTIONS：获取Server端可以使用的HTTP Method。
+
+#### *Things to avoid in REST*
+
+- REST要使用@PathVariable而不是使用@RequestParameter。
+- 一定不要在URL中出现动词。
+- 如果有verion的话尽量放在header中而不是放在url中。
+
+### 使用Spring MVC开发REST风格End point
+
+- DAO层的PO(Persisent Object)对象尽量和REST层的DTO(Data Transfer Object)对象分开，这样便于开发和维护。
+- 使用@ResponseBody，Spring默认将会把Object转变为JSON，也可以通过标注@RestController，则该controller中的所有Http方法默认都将返回JSON。
+- 如果Path中的参数多于5个，则尽量使用@RequestBody。
+- 在@RestController的方法中如果显示定义ModelAndView返回，Spring MVC依然可以找到对应的jsp并对其进行render。但是返回string的方式不可再使用了。
+- Spring MVC中已经提前enable了各种HttpMessageConverter可供使用。canwrite方法负责安排该输出是否可以被转换为某种格式。
+  ![Enabled HttpMessageConverter][10]
+- 通过在@RequestMapping或者@GetMapping etc.注解中定义consumes和produces两个属性，可以控制该方法的输入输出表现形式。consumes代表的是限制该方法接受什么类型的请求体，produces代表的是限定返回的媒体类型，仅当request header中的Accept类型中包含该制定类型才返回。
+- 对于HttpMessageConverter机制没有处理的数据类型，按Spring MVC的流程，它会流转到ViewResolver。在Spring对REST风格的支持中，还会提供ContentNegotiatingViewResolver。它是一个中介，在controller返回结果找不到HttpMessageConverter解析时，就会流转到这里，这样它就会对返回的结果进行解析。
+- 通过使用ResponseEntity对象或者@ResponseStatus注解，可以封装状态码以及自定义header。异常处理通常使用@ControllerAdvice和@ExceptionHandler对所有controller的异常进行处理。可以通过继承关系来定义对于所有controller的general exception和对于某些controller定制的exception。
+
+### RestTemplate
+
+在当今的microserivces中，会将一个大系统拆分为多个microsevices。按照microservices的建议，每个service系统都会暴露REST URL请求给别的微服务系统所调用。为了方便完成系统之间进行互相调用，Spring还给予了RestTemplate，通过它可以很方便的对REST请求进行系统间的调用，完成系统之间的数据集成。
+
+- RestTemplate底层是由HttpURLConnection实现的。
+- RestTemplate有两种实现，一种是使用postForEntity和getForEntity，另一种是使用exchange。推荐使用第一种因为可读性较高。
+
+# 10. Spring Security
+
+## *Spring Security*
+对于构建distributed-miscroservices solution，通常security是一个很大的问题。Spring提供了其安全框架Spring Security来解决安全访问控制的问题。
+
+### Spring Security Basic和简单Security Authentication
+
+- 在一般的J2EE工程中，通常使用Servlet（Filter）对请求进行拦截，然后在Filter中通过自己的验证逻辑来决定是否放行请求。**同样的，Spring Security也是基于这个原理，在进入到DispatcherServlet前就可以对Spring MVC的请求进行拦截，然后通过一定的验证，从而决定是否放行请求访问系统。**
+- 为了对请求进行拦截，Spring Security提供了过滤器**DelegatingFilterProxy**类给予开发者配置。在传统的Spring项目中可以使用@EnableWebSecurity来驱动Spring Security，在SpringBoot中更是只需要添加security的dependency便可以驱动。
+- ***Spring Security原理***：**启用了Spring Security后，Spring IoC容器就会创建一个名为springSecurityFilterChain的Spring Bean。Type是FilterChainProxy，事实上它也实现了Filter接口，只是它是一个特殊的interceptor。在Spring Security操作的过程中它会提供Servlet过滤器DelegatingFilterProxy，这个Filter会通过Spring Web IoC容器去获取Spring Security所自动创建的FilterChainProxy对象，这个对象上存在一个拦截列表（List），List上存在用户验证的拦截器，跨站点请求伪造拦截器等，这样它就提供了多种拦截功能。同时，通过它还可以注册Filter，来满足对于拦截的不同需求。**
+
+### 使用WebSecurityConfigurerAdapter自定义
+
+- 为了给FilterChainProxy对象加入自定义的初始化，Spring Security提供了SecurityConfigurer接口，通过它就能实现对Spring Security的配置。为了更加方便，Spring对Web工程还提供了专门的接口WebSecurityConfigurer，并且在这个接口上定义了一个abstract class-WebSecurityConfigurerAdapter，通过继承这个类，便可以实现Spring Security默认的安全功能，也可以通过override来定义自己的安全拦截方案。
+  ![WebSecurityConfigurerAdapter][11]
+    - configure(AuthenticationManagerBuilder)用来配置用户签名服务，主要用来给予用户角色和权限。定义user/password/role，默认情况下是Spring不会为你创建任何的user和password，也就是有登录页面而没有可登陆的用户。
+    - configure(WebSecurity)用来配置Filter链。
+    - configure(HttpSecurity)用来配置拦截保护的请求，指定用户和角色对应的URL的访问权限，也就是开发者可以通过覆盖这个方法来指定用户和角色的访问权限。比如什么请求放行，什么请求需要验证。
+
+### 自定义用户服务信息
+
+- 在SpringBoot中，如果没有用户配置，它将会自动地生成一个名称为user，password是随机生成的用户，password可以在日志中观察到。
+
+#### *In-memory security*
+
+- 将用户的信息存放在memory中，比较简单，适合测试的快速环境搭建。
+- 使用authorities()时必须要加上ROLE，比如`authorities("ROLE_USER", "ROLE_ADMIN")`。
+- 使用role()时则不需要加上ROLE, 比如`.roles("USER")`。
+- 该方法不常用，因为会占用JVM的内存空间。
+
+#### *Jdbc user details security*
+
+- 在大部分情况下，用户的信息会存放在Database中，为此Spring Security提供了对Database的查询方法来满足需求。**Spring提供了一个UserDetailsService接口，通过实现loadUserByUsername方法，可以在数据库中获取用户信息。**
+
+#### *Restriction on request*
+
+- 除了验证用户，赋予用户不同的角色，还可以给予不同的角色不同的访问权限，这就是去覆盖`configure(HttpSecurity)`的作用。通过它可以实现对于不同用户之间不同的权限的功能。
+- `hasAnyRole`方法会自动加入前缀`ROLE_`。`hasAuthority`则需要手动加入前缀`ROLE_`。`and`为连接词，代表重新加入新的验证权限。
+  ![SpringSecurity方法][12]
+- Spring Security采取的是配置优先的原则，因为通常情况下权限会产生冲突，基于配置优先的原则，会先使用先定义的访问限制。因此在配置时，将具体的配置放到前面，不具体的配置放到后面。也可以采用regular expression来配置使用`regexMatchers`。
+
+#### *Spring EL Expression*
+
+- 通过使用`access`方法，传入一个表达式，如果返回true就允许访问，否则就不允许。
+
+#### *HTTPS*
+
+- 通过使用`requiresChannel`和`requiresSecure`或者`requiresInsecure`，可以强制使用HTTPS或者HTTP。
+
+#### *Cross-Site Request Forgery - CSRF*
+![CSRF][13]
+- 每次HTTP请求的Form要求存在CSRF参数。当第一次访问表单时，Spring Security就生成CSRF参数，放入表单中，这样当提交表单到服务器时，就要求连同CSRF参数一并提交到服务器。Spring Security就会对CSRF参数进行判断，如果一致，它就不会认为该请求来自CSRF攻击；如果CSRF参数为空或者与服务器不一致，它就认为这是一个来自CSRF的攻击而拒绝请求。因为这个参数不在Cookie中，所以第三方网站就无法伪造，这样就可避免CSRF攻击。
+
+#### *Remember me*
+- 通过使用`rememberMe`方法，可以避免用户在一段时间内多次输入密码。并且该方法还可以设置有效时间和key，设置完成后客户端将该key-value保存在cookie中，并且以MD5进行加密，这样能够一定程度上对内容进行保护。
+
+#### *Log out*
+
+- 只用使用HTTP POST请求才能登出，并且会清除Remember Me功能保存的相关信息。
+
+# 11. Spring中的其他技术
+
+## *Spring中的其他技术*
+Spring中还有一些其他的技术比如异步线程池，JMS Message，Scheduler和WebSocket等。
+
+### Async Thread Pool
+
+- 在Spring中存在一个AsyncConfigurer接口，通过实现它来定义async thread pool的一些config，然后通过@EnableAsync来开启异步任务。
+
+### Message Queue
+
+- JMS有两种规范，一种是point to point，另一种是publish/subscribe。Point to point就是将一个系统的message发布到指定的另一个系统，这样另外一个系统就能获得message，从而处理对应的业务逻辑。Publish/Subscribe模式是一个系统约定将一个message发布到一个topic，然后各个系统就能够通过订阅这个主题，根据发送过来的message处理对应的业务。
+- 传统的有ActiveMQ，分布式的有Kafka。
+- 默认的情况下，JmsTemplate会提供一个`SimpleMessageConverter`去实现转换规则，它实现了`MessageConverter`接口。如果要使用其他的序列化器，如`SerializerMessageConverter`或者`Jackson2JsonMessageConverter`，只需要使用JmsTemplate的`setMessageConverter`方法进行设置即可。
+- [Why Queue and How to select Queue][14]: **Article about why a queue is needed as a middleware and how to select a correct queue based on different business scenarios including Kafka, ActiveMQ, RabbitMQ and RocketMQ.**
+- JMS和AMOP的区别：[Difference between JMS and AMOP][15]
+#### *Rabbit MQ*
+- AMOP也是一种常用的message protocol，是一个提供统一消息服务的应用层标准协议，基于此协议的客户端和消息中间件可传递消息，并不受client/middleware/programming language的限制。
+- More Details about RabbitMQ and AMOP: [Spring-AMOP][16]
+
+### Schedule Task
+
+- 在SpringBoot中可以通过@EnableScheduling来开启定时任务，所有定时任务均为Async执行。
+- 通常ScheduleTask都和cron job 配合使用。[CronExpression][17]
+
+### Web Socket
+
+WebSocket Protocol是基于TCP的一种新的网络协议。它实现了浏览器与服务器全双工(full-duplex)通信，允许服务器主动发送信息给客户端，这样就可以实现从客户端发送消息到服务器，而服务器又可以转发消息到客户端，这样就能够实现客户端之间的交互。
+
+- WebSocket中的常用注解：
+    - @ServiceEndpoint: 表示让Spring创建WebSocket的service endpoint，其中包含request path。
+    - @OnOpen: 标注Client打开WebSocket服务端点时调用的方法。
+    - @OnClose: 标注Client关闭WebSocket服务端点时调用的方法。
+    - @OnMessage：标注Client发送message时，WebSocket服务端点调用的方法。
+    - @OnError：标注Client端请求WebSocket服务端点时发生异常调用的方法。
+- 每个Client打开时，都会创建一个新的WebSocket服务对象。
+
+#### *STOMP*
+并不是所有Browser目前都能够支持WebSocket Protocol，为了使得WebSocket的应用能够兼容那些unsupported browser，可以使用STOMP Protocol。
+
+# 12. WebFlux
+In computing, reactive programming is an asynchronous programming paradigm concerned with data streams and the propagation of change.
+
+- Features of reactive programming:
+    - Fast：就是可以快速响应，只要有任何可能，系统都应该能够尽可能快的做出响应。
+    - Recovery：系统在运行中可能出现的问题，但是能够有很强大的容错机制和修复机制保持响应性。
+    - Scalability：在任何load下，reative programming都可以根据自身压力的变化，请求少时，通过减少资源释放服务器压力，负载大时通过扩展算法和软硬件的方式扩展服务能力，以经济实惠的方式实现可伸缩性。
+    - Message Driven：使用async message mechanism, 事件之间的协作是通过消息进行连接的。
+- **Java的三种IO模型**:
+    - BIO(Synchronized Blocking模型) - **Tomcat7之前的默认模型**:：![BIO][18]
+        - BIO的特点：**One request uses one thread.** 对于请求数量较少时缺点不明显。如果请求量巨大则这种模式非常耗费资源，因为创建和销毁线程开销较大。同时无法应付超高数量的请求，而且Thread本身对于JVM的资源占用也比较大。
+        - 同步阻塞I/O模式，数据的读取写入必须阻塞在一个线程内等待其完成。
+        - Description: 有一排水壶在烧开水，BIO的工作模式就是，叫一个线程停留在一个水壶那，直到这个水壶烧开，才去处理下一个水壶。但是实际上线程在等待水壶烧开的时间段什么都没有做。
+
+    - NIO(Non Blocking Synchronized模型) - **Tomcat8之后的默认模型**: ![NIO][19]
+        - NIO的特点：
+            - Buffer - All read/write are in buffer.
+            - Channel - double directions.
+            - Reusable Selector - 轮询出已就绪的channel然后进行读写操作。
+        - Description: NIO的做法是叫一个线程不断的轮询每个水壶的状态，看看是否有水壶的状态发生了改变，从而进行下一步的操作。
+        - **当请求数量较少时NIO并不能体现出性能上和BIO的区别**。
+    - AIO(Non Blocking Asynchronized模型): ![AIO][20]
+        - AIO特点: 用户程序发起IO请求后，不等待数据，同时**操作系统内核**负责I/O操作把数据从内核拷贝到用户程序的缓冲区后通知应用程序。数据拷贝是由操作系统内核完成，用户程序从一开始就没有等待数据，发起请求后不参与任何IO操作，等内核通知完成 - 可以使用回调或者message之类的函数通知线程IO操作完成。
+        - Description: 为每个水壶上面装了一个开关，水烧开之后，水壶会自动通知我水烧开了。
+
+- **WebFlux中的Reactor模型**:
+  ![Reactor][21]
+    - **当Server端有请求进入时，存在的Selector线程(ServiceHandler)就会负责loop client发送来的请求，找到对应的request handler。同时Request handler将会开启一个新的work线程并且执行所需要的业务逻辑。因为Selector线程并不处理复杂的业务功能，因此轮询所需要的时间非常短，响应时间非常快，并不会将server中的线程池卡住。当request handler处理完业务时，结果最终也会转换为data stream发送会client。其中back pressure就发生在这里。**
+    - Summary：**对于server而言，reactor模型就是一种a-synchronised model, selector线程轮询事件，通过路由找到对应的request handler并且开启work线程，最后request handler处理结果data stream返回给client。**
+
+#### *WebFlux概述*
+Spring WebFlux Architecture:
+![WebFlux][22]
+SpringMVC vs WebFlux:
+![MVCvsWebFlux][23]
+
+- **Router Functions:** Router dispatcher, 根据请求的事件，决定采用什么类的什么方法处理客户端发送过来的事件。显然，在Reactor中这代表着Selector。
+- **Spring-webflux:** 是一个控制层，类似与Spring MVC的层级，它主要处理业务逻辑前进行的封装和控制data stream返回的格式。
+- **HTTP/Reactive Streams**: 是将结果转换为data stream的过程。对于数据流的处理还存在一些其他的细节。
+- Spring WebFlux需要的是能够支持Servlet3.1+的容器，而在Java Async编程中使用最多的是Netty，所以SpringBoot对Spring WebFlux的starter中默认依赖的是Netty库。
+- Spring WebFlux中存在两种开发方式，一种是类似于SpringMVC的模式，另一种则是Functional Programming，两种都是允许的。
+- Reactor中提供两种对数据流进行封装的类：
+    - **Flux**：一种存放0-N个data stream的类，响应式框架会一个接一个地(Not one time)将它们发送到client
+    - **Mono**：一种存放0-1个data stream的类。Response会被一次性发送给client。
+    - **Back Pressure (Only Flux)**：对于client，有时候响应能力距离Server有很大的差距，如果在很短的时间内将大量的data stream发送给client，有可能会将client压垮。为了处理这个问题，一般采取响应式拉取，也就是将data stream分成多个序列，一次仅发送一个data stream序列给client，当client处理完这个序列之后，再给server发送消息进行第二次拉取，直到所有数据流被完全处理。这样client可以根据自己的响应速度来获取data stream。
+
+#### *WebHandler*
+
+- **WebHandler与SpringMVC中的DispatcherServlet十分相似**，有异曲同工之处。
+- **WebFlux Core Initialization:**
+  ![WebFlux Core Initialization][24]
+- **DispatcherHandler执行流程:**
+  ![DispatcherHandler][25]
+- Spring WebFlux只能支持Spring Data Reactive，它是一种Non-Block的数据响应方式。遗憾的是因为现在JDBC是Block的，所以Spring Data Reactive并不能对relational db的开发给予有效的支持，并且实用价值不大。**Spring Data Reactive目前和NoSQL合作的更为容易。**
+
+### WebFlux Client
+
+#### *WebClient*
+- 在使用WebClient时，关于相应对象的初始化代码只是给其他服务端注册一个事件而已。只有当事件被触发时代码才会被执行(Mono.block或者Flux.toIterable.iterator)。特别注意的是Flux是采用下拉式获取(**Back Pressure**)。每一次循环会向Server索要一个数据流，直到全部的数据流被处理完。
+
+#### *Converter*
+
+- Date Formatter in application.properties:
+    - spring.webflux.date-format=yyyy-MM-dd
+
+### Database Concurrent Scenario
+3 solutions to solve concurrent scenario:
+**Pessimistic Lock, Optimistic Lock and Cache.**
+
+#### *Pessimistic Lock*
+- Pessimistic Lock(悲观锁): **使用database内部的锁**，每次执行Select语句时，会对该行记录进行加锁，block其他线程的访问。适合频繁insert/update的场景。**通常情况下性能比较差，因为对该记录执行了锁。并不是一个非常高效的方案。**
+    - `Select * from product where id = #{id} for update`
+
+#### *Optimistic Lock*
+- Optimistic lock(乐观锁): **一种不使用数据库锁和不阻塞线程并发的方案**。每次执行Select语句时，不对记录进行加锁。在update数据时需要比较程序中的数量和database中的数量是否相同，如果数据相同则更新，反之程序需要重新读取数据中的数量然后再次进行比较，直到相同之后才可以更新。
+- 乐观锁就是多线程的CAS(Compare and Swap)概念，但是这个方案有时候会引发一种ABA的问题。
+    - Thread 1更新库存，Thread 2读取了Thread 1更新的库存，Thread 2更新了库存，Thread 1 roll back导致库存更新错误。
+    - 为了解决上述问题，一些开发者引入了新的规则，比如version，version在各种操作中只能递增，不能递减。然而使用version的乐观锁会导致比较高的失败率。所以Optimistic redo Lock又被引入了。
+    - Optimistic redo lock意味着如果有的version更新失败，就重新再进行一次更新，**但是需要考虑失败率较高的场景有可能会对Database造成较大的压力，因为需要执行的SQL过多。为了克服这个问题，一般会考虑使用限制时间或者重入次数的办法，以压制过多的SQL执行**。
+
+#### *Cache-Redis*
+- Redis: 在concurrent scenario中，database的解决方案比较缓慢，因为数据库是一个写入磁盘的过程，这个过程的运算速度显然没有写入内存的Redis快。Redis的机制也可以克服concurrent的问题。
+    - Redis Lua在Redis的执行中是具备Atomic的，当它被执行时不会被其它客户端发送过来的命令打断。**使用Redis可以极大的提高数据响应的性能，但是Redis存储的不稳定确实一个问题，所以还需要有一定的机制将Redis存储的存入数据库中。**
+- 因此对于Redis需要考虑两个问题：
+    - **使用Redis作为数据载体响应高并发用户的请求**。
+    - **启用定时任务将Redis中的数据同步到数据库**。
+- **Redis之所以是线程安全的，是因为它只有单线程和单进程非阻塞异步操作(Async)。因此任何操作都是原子性不需要担心concurrent问题，使用的是Linux中的epoll operation。**
+
+# 13. Deploy/Test and Monitor
+
+### Deploy
+
+- 通过Maven install生成war，然后使用command就可以运行。
+    - `java -jar XXXX.war --server.port=XXXX`
+- 对于部署到非内嵌的第三方服务器，需要initial Spring MVC的DispatcherServlet。**通过IDE构建SpringBoot项目时选择生成war包会自动配置DispatcherServlet。** - **ServletInitializer.java**
+- 在Servlet3.1规范之后，web.xml已经不再需要了，只需要实现**ServletContainerInitializer接口**即可。**Spring MVC中已经提供了ServletContainerInitializer的实现类SpringServletContainerInitializer，这个实现类会遍历WebApplicationInitializer接口的实现类，加载它所配置的内容。SpringBootServletInitializer就是WebApplicationInitializer接口的实现类之一。**
+  ![ServletInitializer][26]
+
+#### *Hot Deploy*
+
+- 热部署，就是在应用正在运行的时候升级软件，却不需要重新启动应用。
+
+#### *Monitor*
+
+- Actuator endpoint:
+  ![Actuator][27]
+- 默认的情况下Actuator的prefix是`/actuator/`。
+- 自定义Actuator endpoint可支持下列三种Operation：
+    - @ReadOperation：HTTP GET
+    - @WriteOperation：HTTP POST
+    - @DeleteOperation：HTTP DELETE
+- 通过继承AbstractHealthIndicator，可以提供customized health indicator。
+
+[1]:https://raw.githubusercontent.com/eziceice/blog/master/spring/Spring%20MVC流程图.png
+[2]:https://raw.githubusercontent.com/eziceice/blog/master/spring/SpringMVC%E6%A1%86%E6%9E%B6%E5%8E%9F%E7%90%86.png
+[3]:https://raw.githubusercontent.com/eziceice/blog/master/spring/@RequestMapping.png
+[4]:https://raw.githubusercontent.com/eziceice/blog/master/spring/HttpMessageConverter.png
+[5]:https://raw.githubusercontent.com/eziceice/blog/master/spring/MVCHandlerHTTPMessageConverter.png
+[6]:https://raw.githubusercontent.com/eziceice/blog/master/spring/SpringMVCModelandView.png
+[7]:https://raw.githubusercontent.com/eziceice/blog/master/spring/View.png
+[8]:https://raw.githubusercontent.com/eziceice/blog/master/spring/Interceptorflow.png
+[9]:https://raw.githubusercontent.com/eziceice/blog/master/spring/@ReponseBodyToJson.png
+[10]:https://raw.githubusercontent.com/eziceice/blog/master/spring/SpringbootDefaultEnabledHttpMessageConverter.png
+[11]:https://raw.githubusercontent.com/eziceice/blog/master/spring/WebSecurityConfigurerAdapter.png
+[12]:https://raw.githubusercontent.com/eziceice/blog/master/spring/SpringSecurityMethod.png
+[13]:https://raw.githubusercontent.com/eziceice/blog/master/spring/CSRF.png
+[14]:https://github.com/doocs/advanced-java/blob/master/docs/high-concurrency/why-mq.md
+[15]:https://blog.csdn.net/hpttlook/article/details/23391967
+[16]:https://www.baeldung.com/spring-amqp
+[17]:https://www.freeformatter.com/cron-expression-generator-quartz.html
+[18]:https://raw.githubusercontent.com/eziceice/blog/master/spring/BIO.png
+[19]:https://raw.githubusercontent.com/eziceice/blog/master/spring/NIO.png
+[20]:https://raw.githubusercontent.com/eziceice/blog/master/spring/AIO.png
+[21]:https://raw.githubusercontent.com/eziceice/blog/master/spring/Reactor%E6%A8%A1%E5%9E%8B.png
+[22]:https://raw.githubusercontent.com/eziceice/blog/master/spring/Spring%20WebFlux%20Structure.png
+[23]:https://raw.githubusercontent.com/eziceice/blog/master/spring/SpringMVC%20vs%20WebFlux.png
+[24]:https://raw.githubusercontent.com/eziceice/blog/master/spring/WebFlux%20Core%20Initial.png
+[25]:https://raw.githubusercontent.com/eziceice/blog/master/spring/DispatcherHandler.png
+[26]:https://raw.githubusercontent.com/eziceice/blog/master/spring/ServletInitializer.png
+[27]:https://raw.githubusercontent.com/eziceice/blog/master/spring/Actuator.png
