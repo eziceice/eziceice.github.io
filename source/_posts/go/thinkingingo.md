@@ -1,7 +1,7 @@
 ---
 title: Thinking in Go
-date: 2021-09-30 12:03:56  
-tags: go  
+date: 2021-10-01 15:07:43
+tags: go
 categories:
 - programming languages
 ---
