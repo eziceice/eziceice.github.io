@@ -13,6 +13,10 @@
     
 
     
+        <meta name="description" content="BasicCommon Commands
+Go executes init functions automatically at program startup, after global variables have been initialised
+go build compiles the c"/>
+    
 
     <!--Author-->
     
@@ -21,10 +25,14 @@
 
     <!--Open Graph Title-->
     
-        <meta property="og:title" content="Yutian&#39;s Blog"/>
+        <meta property="og:title" content="Thinking in Go"/>
     
 
     <!--Open Graph Description-->
+    
+        <meta property="og:description" content="BasicCommon Commands
+Go executes init functions automatically at program startup, after global variables have been initialised
+go build compiles the c"/>
     
 
     <!--Open Graph Site Name-->
@@ -32,7 +40,7 @@
 
     <!--Type page-->
     
-        <meta property="og:type" content="website"/>
+        <meta property="og:type" content="article"/>
     
 
     <!--Page Cover-->
@@ -51,7 +59,7 @@
 
     <!-- Title -->
     
-    <title>Archives: 2021/9 - Yutian&#39;s Blog</title>
+    <title>Thinking in Go - Yutian&#39;s Blog</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
@@ -155,49 +163,91 @@
 </nav>
 
     <!-- Main Content -->
-    
+    <!-- Page Header -->
+<!-- Set your background image for this header in your post front-matter: cover -->
 
-<!-- Page Header -->
-<!-- Set your background image for this header in the theme's configuration: index_cover -->
 <header class="intro-header" style="background-image: url('/img/home-bg.jpg')">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>2021/9</h1>
+                <div class="post-heading">
+                    <h1>Thinking in Go</h1>
+                    
+                    <span class="meta">
+                        <!-- Date and Author -->
+                        
+                        
+                            2021-10-01
+                        
+                    </span>
                 </div>
             </div>
         </div>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Tags and categories -->
+           
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 post-tags">
+                    
+                        
+
+
+<a href="/tags/go/">#go</a>
+
+
+                    
+                </div>
+                <div class="col-lg-4 col-md-5 post-categories">
+                    
+                        
+
+<a href="/categories/programming-languages/">programming languages</a>
+
+                    
+                </div>
             
-                <div class="post-preview">
-    <a href="/2021/09/30/go/thinkingingo/">
-        <h1 class="post-title archive">
-            Thinking in Go
-        </h1>
-    </a>
-    <p class="post-meta archive">
-        <!-- Date and Author -->
-        
-        2021-09-30
-    </p>
-</div>
+
+            <!-- Gallery -->
             
-            <div class="archive-before-pagination"></div>
-            <ul class="pager">
-    
-    
+
+            <!-- Post Main Content -->
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <h2 id="Basic"><a href="#Basic" class="headerlink" title="Basic"></a>Basic</h2><h3 id="Common-Commands"><a href="#Common-Commands" class="headerlink" title="Common Commands"></a>Common Commands</h3><ul>
+<li>Go executes <code>init</code> functions automatically at program startup, after global variables have been initialised</li>
+<li><code>go build</code> compiles the code into an executable file</li>
+<li><code>go list -f &#39;&#123;&#123;.Target&#125;&#125;&#39;</code> show the GOPATH</li>
 </ul>
+<h3 id="Flow-Control"><a href="#Flow-Control" class="headerlink" title="Flow Control"></a>Flow Control</h3><ul>
+<li>Go loop doesn’t need <code>()</code> same as <code>if</code></li>
+<li><code>defer</code> statement defers the execution of a function until the surrounding function returns. The arguments are evaluated immediately, but the function call is not executed until the surrounding function returns.</li>
+<li>Deferred function calls are pushed onto a stack. When a function returns, its deferred calls are executed in <strong>last-in-first-out</strong> order.</li>
+</ul>
+<h3 id="More-Types"><a href="#More-Types" class="headerlink" title="More Types"></a>More Types</h3><ul>
+<li>A slice does not store any data, it just describes a section of an underlying array. Changing the elements of a slice modifies the corresponding elements of its underlying array.</li>
+<li>Functions are values too, which can be passed around just like other values. </li>
+</ul>
+
+
+                
+            </div>
+
+            <!-- Comments -->
+            
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    
+
+
+                </div>
+            
         </div>
     </div>
-</div>
-
+</article>
 
     <!-- Footer -->
     <hr />
