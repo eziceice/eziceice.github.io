@@ -230,7 +230,26 @@ go build compiles the c"/>
 </ul>
 <h3 id="More-Types"><a href="#More-Types" class="headerlink" title="More Types"></a>More Types</h3><ul>
 <li>A slice does not store any data, it just describes a section of an underlying array. Changing the elements of a slice modifies the corresponding elements of its underlying array.</li>
-<li>Functions are values too, which can be passed around just like other values. </li>
+<li>Functions are values too, which can be passed around just like other values.</li>
+</ul>
+<h3 id="Methods"><a href="#Methods" class="headerlink" title="Methods"></a>Methods</h3><ul>
+<li>Go does not have classes. However, you can define methods on types.</li>
+<li>A method is a function with a special  <em>receiver</em>  argument.</li>
+<li>The receiver appears in its own argument list between the  <code>func</code> keyword and the method name.</li>
+<li>You can only declare a method with a receiver whose type is defined in the same package as the method. You cannot declare a method with a receiver whose type is defined in another package</li>
+<li>With a value receiver, method operates on a copy of the original type value, if the original value needs to be changed then must use pointer.</li>
+<li>Functions with a pointer argument must take a pointer, while methods with pointer receivers take either a value or a pointer as the receiver when they are called.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var v Vertex</span><br><span class="line">v.Scale(5)  // OK</span><br><span class="line">p := &amp;v</span><br><span class="line">p.Scale(10) // OK</span><br></pre></td></tr></table></figure></li>
+<li>In general, all methods on a given type should have either value or pointer receivers, but not a mixture of both<ul>
+<li>The first is so that the method can modify the value that its receiver points to.</li>
+<li>The second is to <strong>avoid copying the value on each method call</strong>. This can be more efficient if the receiver is a large struct, for example.</li>
+</ul>
+</li>
+<li>A type implements an interface by implementing its methods. <strong>There is no explicit declaration of intent, no “implements” keyword</strong>. Implicit interfaces decouple the definition of an interface from its implementation, which could then appear in any package without prearrangement.</li>
+<li>An interface value holds a value of a specific underlying concrete type.</li>
+<li>If the concrete value inside the interface itself is nil, the method will be called with a nil receiver.</li>
+<li>Calling a method on a nil interface is a run-time error because there is no type inside the interface tuple to indicate which <em>concrete</em> method to call.</li>
+<li>Empty interfaces are used by code that handles values of unknown type</li>
+<li>A nil <code>error</code> denotes success; a non-nil <code>error</code> denotes failure.</li>
 </ul>
 
 
