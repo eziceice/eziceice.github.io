@@ -251,6 +251,20 @@ go build compiles the c"/>
 <li>Empty interfaces are used by code that handles values of unknown type</li>
 <li>A nil <code>error</code> denotes success; a non-nil <code>error</code> denotes failure.</li>
 </ul>
+<h3 id="Concurrency"><a href="#Concurrency" class="headerlink" title="Concurrency"></a>Concurrency</h3><ul>
+<li>A <em>goroutine</em> is a lightweight thread managed by the Go runtime.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">go f(x, y, z) </span><br><span class="line">starts a new goroutine running </span><br><span class="line">f(x,y,z)</span><br></pre></td></tr></table></figure></li>
+<li>The evaluation of f(x,y,z) happens in the current goroutine and the execution of f(x,y,z) happens in the new goroutine.</li>
+<li>Goroutines run in the same address space, so access to shared memory must be synchronized.</li>
+</ul>
+<h4 id="Channels"><a href="#Channels" class="headerlink" title="Channels"></a>Channels</h4><ul>
+<li>Channels are a typed conduit through which you can send and receive values with the channel operator, <code>&lt;-</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ch &lt;- v    // Send v to channel ch.</span><br><span class="line">v := &lt;-ch  // Receive from ch, and</span><br><span class="line">           // assign value to v.</span><br></pre></td></tr></table></figure></li>
+<li>By default, sends and receives block until the other side is ready. This allows goroutines to synchronize without explicit locks or condition variables.</li>
+<li>Sends to a buffered channel block only when the buffer is full. Receives block when the buffer is empty.</li>
+<li>Only the sender should close a channel, never the receiver. Sending on a closed channel will cause a panic.</li>
+<li>Channels aren’t like files; you don’t usually need to close them. Closing is only necessary when the receiver must be told there are no more values coming, such as to terminate a <code>range</code> loop.</li>
+<li>The  <code>select</code>  statement lets a <code>goroutine</code> wait on multiple communication operations.</li>
+<li>A <code>select</code> blocks until one of its cases can run, then it executes that case. It chooses one at random if multiple are ready. <code>default</code> case in a <code>select</code> will run if no other case is ready.</li>
+</ul>
 
 
                 
