@@ -1,7 +1,7 @@
 ---
 title: Thinking in Go
 date: 2021-10-01 15:07:43
-updated: 2021-10-05 15:07:43
+updated: 2021-10-13 15:07:43
 tags: go
 categories:
 - programming languages
@@ -74,3 +74,38 @@ v := <-ch  // Receive from ch, and
 - Channels aren't like files; you don't usually need to close them. Closing is only necessary when the receiver must be told there are no more values coming, such as to terminate a `range` loop.
 - The  `select`  statement lets a `goroutine` wait on multiple communication operations.
 - A `select` blocks until one of its cases can run, then it executes that case. It chooses one at random if multiple are ready. `default` case in a `select` will run if no other case is ready.
+
+## Effective Go
+
+### Names
+
+#### MixedCaps
+
+- The convention in Go is to use `MixedCaps` or `mixedCaps` rather than underscores to write multiword names.
+
+### Functions
+
+- Deferred functions are executed in LIFO order
+```
+for i := 0; i < 5; i++ {
+    defer fmt.Printf("%d ", i)
+}
+so this code will cause `4 3 2 1 0` to be printed when the function returns.
+```
+- The arguments to the deferred function (which include the receiver if the function is a method) are evaluated when the _defer_ executes, not when the _call_ executes.
+
+### Data
+
+- Go has two allocation primitives, the built-in functions `new` and `make`.
+- `new` a built-in function that allocates memory, but unlike its namesakes in some other languages it does not _initialize_ the memory, it only _zeros_ it. That is, `new(T)` allocates zeroed storage for a new item of type `T` and returns its address, a value of type `*T`. In Go terminology, it returns a pointer to a newly allocated zero value of type `T`.
+- The built-in function `make(T, args)` serves a purpose different from `new(T)`. It creates slices, maps, and channels only, and it returns an _initialized_ (not _zeroed_) value of type `T` (not `*T`). Remember that `make` applies only to maps, slices and channels and does not return a pointer. To obtain an explicit pointer allocate with `new` or take the address of a variable explicitly.
+
+#### Arrays
+
+- Arrays are values. Assigning one array to another copies all the elements.
+- In particular, if you pass an array to a function, it will receive a  _copy_  of the array, not a pointer to it.
+- The size of an array is part of its type. The types  `[10]int`  and  `[20]int`  are distinct.
+
+#### Slices
+
+- Slices hold references to an underlying array, and if you assign one slice to another, both refer to the same array. If a function takes a slice argument, changes it makes to the elements of the slice will be visible to the caller, analogous to passing a pointer to the underlying array.
