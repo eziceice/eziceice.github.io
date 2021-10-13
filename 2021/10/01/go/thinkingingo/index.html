@@ -265,6 +265,26 @@ go build compiles the c"/>
 <li>The  <code>select</code>  statement lets a <code>goroutine</code> wait on multiple communication operations.</li>
 <li>A <code>select</code> blocks until one of its cases can run, then it executes that case. It chooses one at random if multiple are ready. <code>default</code> case in a <code>select</code> will run if no other case is ready.</li>
 </ul>
+<h2 id="Effective-Go"><a href="#Effective-Go" class="headerlink" title="Effective Go"></a>Effective Go</h2><h3 id="Names"><a href="#Names" class="headerlink" title="Names"></a>Names</h3><h4 id="MixedCaps"><a href="#MixedCaps" class="headerlink" title="MixedCaps"></a>MixedCaps</h4><ul>
+<li>The convention in Go is to use <code>MixedCaps</code> or <code>mixedCaps</code> rather than underscores to write multiword names.</li>
+</ul>
+<h3 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h3><ul>
+<li>Deferred functions are executed in LIFO order<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for i := 0; i &lt; 5; i++ &#123;</span><br><span class="line">    defer fmt.Printf(&quot;%d &quot;, i)</span><br><span class="line">&#125;</span><br><span class="line">so this code will cause `4 3 2 1 0` to be printed when the function returns.</span><br></pre></td></tr></table></figure></li>
+<li>The arguments to the deferred function (which include the receiver if the function is a method) are evaluated when the <em>defer</em> executes, not when the <em>call</em> executes.</li>
+</ul>
+<h3 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h3><ul>
+<li>Go has two allocation primitives, the built-in functions <code>new</code> and <code>make</code>.</li>
+<li><code>new</code> a built-in function that allocates memory, but unlike its namesakes in some other languages it does not <em>initialize</em> the memory, it only <em>zeros</em> it. That is, <code>new(T)</code> allocates zeroed storage for a new item of type <code>T</code> and returns its address, a value of type <code>*T</code>. In Go terminology, it returns a pointer to a newly allocated zero value of type <code>T</code>.</li>
+<li>The built-in function <code>make(T, args)</code> serves a purpose different from <code>new(T)</code>. It creates slices, maps, and channels only, and it returns an <em>initialized</em> (not <em>zeroed</em>) value of type <code>T</code> (not <code>*T</code>). Remember that <code>make</code> applies only to maps, slices and channels and does not return a pointer. To obtain an explicit pointer allocate with <code>new</code> or take the address of a variable explicitly.</li>
+</ul>
+<h4 id="Arrays"><a href="#Arrays" class="headerlink" title="Arrays"></a>Arrays</h4><ul>
+<li>Arrays are values. Assigning one array to another copies all the elements.</li>
+<li>In particular, if you pass an array to a function, it will receive a  <em>copy</em>  of the array, not a pointer to it.</li>
+<li>The size of an array is part of its type. The types  <code>[10]int</code>  and  <code>[20]int</code>  are distinct.</li>
+</ul>
+<h4 id="Slices"><a href="#Slices" class="headerlink" title="Slices"></a>Slices</h4><ul>
+<li>Slices hold references to an underlying array, and if you assign one slice to another, both refer to the same array. If a function takes a slice argument, changes it makes to the elements of the slice will be visible to the caller, analogous to passing a pointer to the underlying array.</li>
+</ul>
 
 
                 
